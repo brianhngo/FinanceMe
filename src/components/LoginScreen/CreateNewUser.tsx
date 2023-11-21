@@ -2,33 +2,84 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase/firebaseConfig.js';
 import { useNavigate } from 'react-router-dom';
+import PasswordStrengthMeter from './PasswordStrengthMeter.js';
 
 export default function CreateNewUser() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // State variables for managing email, password, and error messages
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [password2, setPassword2] = useState<string>('');
+
+  // General Error message
+  const [createUserStatus, setCreateUserStatus] = useState<boolean>(false);
+
+  // Doesn't meet requirements length
+  const [errorMessage1, setErrorMessage1] = useState<boolean>(false);
+
+  // Password1 !== Password 2
+  const [errorMessage2, setErrorMessage2] = useState<boolean>(false);
+
+  // email already exists
+  const [errorMessage3, setErrorMessage3] = useState<boolean>(false);
+
+  // Access the navigation function from react-router-dom
   const navigate = useNavigate();
 
-  const emailHandler = (event: object) => {
+  // Event handlers for updating state based on user input
+  const emailHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(event.target.value);
   };
 
-  const passwordHandler = (event: object) => {
+  const passwordHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setPassword(event.target.value);
   };
 
-  const createAccountHandler = async (event) => {
+  const password2Handler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setPassword2(event.target.value);
+  };
+
+  // Handler for creating a new user account
+  const createAccountHandler = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): void => {
     event.preventDefault();
     try {
+      // Passwords User has entered does not match
+      if (password !== password2) {
+        setCreateUserStatus(true);
+        setErrorMessage2(true);
+        setErrorMessage1(false);
+        setErrorMessage3(false);
+        return;
+      }
+      // Since P1 === P2, we just check if it meets criteria length > 5
+      if (password.length < 6) {
+        setCreateUserStatus(true);
+        setErrorMessage1(true);
+        setErrorMessage2(false);
+        setErrorMessage3(false);
+        return;
+      }
+
+      // Assuming createUserWithEmailAndPassword is a function that creates a user
       const isSuccessful = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
+
       if (isSuccessful) {
         navigate('/dashboard');
       }
     } catch (error) {
-      console.error('Create User Failed');
+      setCreateUserStatus(true);
+      setErrorMessage3(true);
+      setErrorMessage1(false);
+      setErrorMessage2(false);
     }
   };
 
@@ -41,6 +92,31 @@ export default function CreateNewUser() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
               Create New Account
             </h1>
+            {/* Error Messages to indicate to the user what errorred occurred */}
+            {createUserStatus ? (
+              <p className="w-full text-lg text-red-500">
+                {' '}
+                Error! Failed Attempt to Create Account{' '}
+              </p>
+            ) : null}
+            {errorMessage1 ? (
+              <p className="w-full text-md text-red-500">
+                {' '}
+                The password you have typed does not meet the criteria
+              </p>
+            ) : null}
+            {errorMessage2 ? (
+              <p className="w-full text-md text-red-500">
+                {' '}
+                The passwords do not match. Please Try Again
+              </p>
+            ) : null}
+            {errorMessage3 === true ? (
+              <p className="w-full text-md text-red-500">
+                {' '}
+                The following email already exists.
+              </p>
+            ) : null}
             {/* Form Container */}
             <form className="space-y-4 md:space-y-6" action="#">
               <div>
@@ -76,6 +152,26 @@ export default function CreateNewUser() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
+                <label
+                  htmlFor="password2"
+                  className="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Re-Enter Password
+                </label>
+                <input
+                  type="password"
+                  name="password2"
+                  id="password"
+                  onChange={password2Handler}
+                  value={password2}
+                  placeholder="••••••••"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+                <PasswordStrengthMeter password={password} />
+                <p className="w-full text-md text-red-500">
+                  {' '}
+                  Password must be a minimum of 6 characters{' '}
+                </p>
               </div>
               {/* CheckBox row container */}
 
@@ -86,11 +182,12 @@ export default function CreateNewUser() {
               </button>
 
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{' '}
+                Want to go back to Login?{' '}
                 <a
+                  onClick={() => navigate('/login')}
                   href="#"
                   className="font-medium text-blue-600 hover:underline">
-                  Create Account
+                  Back to Login
                 </a>
               </p>
             </form>

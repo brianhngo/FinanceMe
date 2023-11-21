@@ -14,16 +14,16 @@ export default function LoginScreen(): React.FC {
 
   // Email & Password onChange Handler
 
-  const emailHandler = (event) => {
+  const emailHandler = (event: MouseEvent): void => {
     setEmail(event.target.value);
   };
 
-  const passwordHandler = (event) => {
+  const passwordHandler = (event: MouseEvent): void => {
     setPassword(event.target.value);
   };
 
   // Sign In Handler
-  const handleSignIn = async (e): Promise<void> => {
+  const handleSignIn = async (e: MouseEvent): Promise<void> => {
     e.preventDefault();
     try {
       const isSuccessful = await signInWithEmailAndPassword(
@@ -96,7 +96,7 @@ export default function LoginScreen(): React.FC {
                   name="password"
                   id="password"
                   value={password}
-                  onChange={emailHandler}
+                  onChange={passwordHandler}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
@@ -128,7 +128,9 @@ export default function LoginScreen(): React.FC {
                   Forgot password?
                 </a>
               </div>
-              <button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button
+                onClick={handleSignIn}
+                className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Sign in
               </button>
               <button
@@ -148,13 +150,13 @@ export default function LoginScreen(): React.FC {
                     fill="currentColor"
                     d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
                 </svg>
-                Sign up with Google<div></div>
+                Sign in with Google<div></div>
               </button>
 
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{' '}
                 <a
-                  href="/createaccount"
+                  onClick={() => navigate('/createaccount')}
                   className="font-medium text-blue-600 hover:underline">
                   Sign up
                 </a>
