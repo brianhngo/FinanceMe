@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function GetStartedNow() {
+export default function GetStartedNow(): React.FC {
   return (
     <section className="bg-pink-300 pt-[10%] pb-[10%]">
       <div className="mx-auto text-center w-full flex flex-col justify-center align-middle">
