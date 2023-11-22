@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function KeyFeatures(): React.FC {
   return (
-    <section className="bg-gray-300">
+    <section id="key-features" className="bg-gray-300">
       <div className="text-center">
         <h1 className=" text-center max-w-[100%] mb-4 pt-4 text-4xl font-extrabold tracking-tight leading-none md:text-7xl xl:text-6.75xl dark:text-white">
           {' '}

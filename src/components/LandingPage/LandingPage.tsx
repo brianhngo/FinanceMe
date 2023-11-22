@@ -9,7 +9,7 @@ import GetStartedNow from './GetStartedNow';
 import Footer from './Footer';
 export default function LandingPage() {
   return (
-    <>
+    <div className="min-w-full w-[100%]">
       <Navbar />
       <HeroBanner />
       <KeyFeatures />
@@ -18,6 +18,6 @@ export default function LandingPage() {
       <Reviews />
       <GetStartedNow />
       <Footer />
-    </>
+    </div>
   );
 }

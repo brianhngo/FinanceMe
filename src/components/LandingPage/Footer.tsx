@@ -8,15 +8,15 @@ export default function Footer(): React.FC {
           <div className="mb-6 md:mb-0">
             <a href="https://flowbite.com/" className="flex items-center">
               <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 me-3"
-                alt="FlowBite Logo"
+                src="/images/Logo.png"
+                className="mt-2 w-28 h-28"
+                alt="Logo"
               />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 FinanceMe
               </span>
             </a>
-            <p className="text-white mt-[10%] text-1xl">
+            <p className="text-white mt-[10%]  text-2xl">
               {' '}
               Empower Your Wealth With Precision
             </p>

@@ -3,9 +3,9 @@ import React from 'react';
 export default function HeroBanner(): React.FC {
   return (
     // Parent Container
-    <section className="mt-[68px] p-[150px] bg-pink-300">
+    <section className="w-full min-w-100% mt-[68px] p-[150px] bg-pink-300">
       {/* Child Container */}
-      <div className="grid max-w-screen-xl  py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+      <div className="grid max-w-screen-xl py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
         {/* Description Container */}
         <div className="mr-auto place-self-center lg:col-span-6 lg:text-center">
           <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-6xl xl:text-6.75xl dark:text-white">
@@ -18,7 +18,7 @@ export default function HeroBanner(): React.FC {
           </p>
           <a
             href="#"
-            className="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  md:text-md xl:text-lg focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            className="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 md:text-md xl:text-lg focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Speak to Sales
           </a>
         </div>
@@ -27,7 +27,7 @@ export default function HeroBanner(): React.FC {
           <img
             src="/images/HeroBannerImage.png"
             alt="Hero Banner Image"
-            className="w-full h-auto"
+            className="w-full h-auto max-h-full object-cover"
           />
         </div>
       </div>

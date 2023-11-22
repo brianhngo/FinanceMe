@@ -12,6 +12,16 @@ export default function LoginScreen(): React.FC {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // error message when login attempt fails
+  const [errorMessage, setErrorMessage] = useState(false);
+
+  // Password visibility
+  const [showPassword1, setShowPassword1] = useState<boolean>(false);
+
+  const togglePassword1 = (): void => {
+    setShowPassword1(!showPassword1);
+  };
+
   // Email & Password onChange Handler
 
   const emailHandler = (event: MouseEvent): void => {
@@ -35,7 +45,9 @@ export default function LoginScreen(): React.FC {
         navigate('/dashboard');
       }
     } catch (error) {
-      console.error('Error Logging In');
+      setErrorMessage(true);
+      setEmail('');
+      setPassword('');
     }
   };
 
@@ -51,13 +63,16 @@ export default function LoginScreen(): React.FC {
       }
     } catch (error) {
       console.error('Error Signing in with Google');
+      setErrorMessage(true);
+      setEmail('');
+      setPassword('');
     }
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <section className="h-screen w-screen md:h-full flex justify-center items-center bg-gray-50 dark:bg-gray-900">
       {/* Login Container */}
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div className="flex flex-col items-center md:w-[40%] justify-center align-middle px-6 py-8  md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
@@ -66,6 +81,12 @@ export default function LoginScreen(): React.FC {
             <h1 className="text-lg font-bold leading-tight tracking-tight text-gray-900 md:text-xl dark:text-white">
               Sign in to your account
             </h1>
+            {errorMessage ? (
+              <p className="w-full text-lg text-red-500">
+                {' '}
+                Failed Attempt to Login! Incorrect Information{' '}
+              </p>
+            ) : null}
             {/* Form Container */}
             <form className="space-y-4 md:space-y-6" action="#">
               <div>
@@ -91,16 +112,30 @@ export default function LoginScreen(): React.FC {
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Password
                 </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  value={password}
-                  onChange={passwordHandler}
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
+                <div className="flex items-center">
+                  <input
+                    type={showPassword1 === true ? 'text' : 'password'}
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={passwordHandler}
+                    placeholder="••••••••"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                  <svg
+                    onClick={togglePassword1}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill={showPassword1 ? '#555' : 'currentColor'}
+                    className="bi bi-eye-slash cursor-pointer ml-1"
+                    viewBox="0 0 16 16">
+                    <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+                    <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z" />
+                    <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z" />
+                  </svg>
+                </div>
               </div>
               {/* CheckBox row container */}
               <div className="flex items-center justify-between">
@@ -157,8 +192,16 @@ export default function LoginScreen(): React.FC {
                 Don’t have an account yet?{' '}
                 <a
                   onClick={() => navigate('/createaccount')}
-                  className="font-medium text-blue-600 hover:underline">
+                  className="font-medium text-blue-600 hover:underline cursor-pointer">
                   Sign up
+                </a>
+              </p>
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                Want to go back to home page?{' '}
+                <a
+                  onClick={() => navigate('/')}
+                  className="font-medium text-blue-600 hover:underline cursor-pointer">
+                  Back to Home Page
                 </a>
               </p>
             </form>
