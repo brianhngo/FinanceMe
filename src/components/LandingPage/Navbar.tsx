@@ -10,7 +10,7 @@ export default function Navbar(): React.FC {
   };
 
   return (
-    <nav className=" dark:bg-gray-900 w-full fixed z-20 top-0 start-0 border-b border-gray-200">
+    <nav className="dark:bg-gray-900 w-screen md:w-screen fixed z-20 top-0 start-0 border-b mx-auto border-gray-200">
       <div className=" ml-4 mr-4 flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Left Side  */}
         <a
@@ -22,7 +22,7 @@ export default function Navbar(): React.FC {
           </span>
         </a>
         {/* Right Side */}
-        <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
+        <div className="items-center mx-auto  hidden w-full md:flex  md:w-auto md:order-1">
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a
@@ -42,7 +42,7 @@ export default function Navbar(): React.FC {
             </li> */}
           </ul>
         </div>
-        <div className="flex md:order-2 space-x-3 md:space-x-0 ">
+        <div className="flex mx-auto md:order-2 space-x-3 md:space-x-0 ">
           <button
             onClick={() => navigate('/login')}
             type="button"
