@@ -1,34 +1,19 @@
 //App Routes
-
 import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
-
-const app = express();
-
+import apiRouter from './api/index.js';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+
+const app = express();
+app.use(morgan('dev'));
+app.use(cors());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
 
-// logging middleware
-app.use(morgan('dev'));
-
-// body parsing middleware
-app.use(express.json());
-
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-);
-
-// static file-serving middleware
-app.use(express.static(path.join(__dirname, '..', 'public')));
-
-// sends index.html
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public/index.html'));
-});
+app.use('/api', apiRouter);
 
 // error handling endware
 app.use((err, req, res, next) => {

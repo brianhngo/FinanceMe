@@ -3,8 +3,11 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase/firebaseConfig.js';
 import { useNavigate } from 'react-router-dom';
 import PasswordStrengthMeter from './PasswordStrengthMeter.js';
+import { useDispatch } from 'react-redux';
+import { createNewUser } from '../store/Users.js';
 
 export default function CreateNewUser(): React.FC {
+  const dispatch = useDispatch();
   // State variables for managing email, password, and error messages
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -91,6 +94,12 @@ export default function CreateNewUser(): React.FC {
       );
 
       if (isSuccessful) {
+        dispatch(
+          createNewUser({
+            uid: isSuccessful.user.uid,
+            email: isSuccessful.user.email,
+          })
+        );
         navigate('/dashboard');
       }
     } catch (error) {
@@ -165,7 +174,7 @@ export default function CreateNewUser(): React.FC {
                 </label>
                 <div className="flex items-center">
                   <input
-                    type={showPassword1 === false ? 'text' : 'password'}
+                    type={showPassword1 === false ? 'password' : 'text'}
                     name="password"
                     id="password"
                     onChange={passwordHandler}

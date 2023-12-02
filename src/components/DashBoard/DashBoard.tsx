@@ -1,5 +1,9 @@
 import React from 'react';
-
+import SideBar from './SideBar';
 export default function DashBoard() {
-  return <div>DashBoard</div>;
+  return (
+    <section>
+      <SideBar />
+    </section>
+  );
 }
