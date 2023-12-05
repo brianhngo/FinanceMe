@@ -15,6 +15,21 @@ usersRouter.get('/', async (req, res) => {
   }
 });
 
+// GET a particular User Information
+usersRouter.get('/', async (req, res) => {
+  try {
+    const user = await Users.findOne({ where: { userIdentifer: req.body.id } });
+    if (user) {
+      res.json(user);
+    } else {
+      res.json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Create New Users to the Database when they create an account
 
 usersRouter.put('/createUser', async (req, res) => {

@@ -23,10 +23,23 @@ export const createNewUser = createAsyncThunk(
   }
 );
 
+export const getUserInformation = createAsyncThunk(
+  'GET api/Users/',
+  async () => {
+    try {
+      const { data } = await axios.get('http://localhost:3000/api/users/');
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const Users = createSlice({
   name: 'Users',
   initialState: {
     users: null,
+    userInformation: {},
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -37,6 +50,12 @@ const Users = createSlice({
       })
       .addCase(createNewUser.rejected, (state, { payload }) => {
         state.users = payload;
+      })
+      .addCase(getUserInformation.fulfilled, (state, { payload }) => {
+        state.userInformation = payload;
+      })
+      .addCase(getUserInformation.rejected, (state, { payload }) => {
+        state.userInformation = null;
       });
   },
 });
