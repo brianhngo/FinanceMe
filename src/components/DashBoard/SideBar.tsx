@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { getUserInformation } from '../store/Users.js';
+import { auth } from '../../../firebase/firebaseConfig.js';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
-export default function SideBar() {
+export default function SideBar({ userInfo }) {
+  const navigate = useNavigate();
+
+  const logoutHander = (event) => {
+    event.preventDefault();
+    signOut(auth)
+      .then(() => {
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <>
       <button
@@ -40,7 +54,7 @@ export default function SideBar() {
             </span>
             {/* Switch out Name for actual account users name  */}
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white pb-5">
-              Steph Curry
+              {userInfo ? userInfo.email : null}
             </span>
           </div>
           <div></div>
@@ -116,6 +130,7 @@ export default function SideBar() {
             </li>
             <li>
               <a
+                onClick={logoutHander}
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg mt-3 mb-3 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg

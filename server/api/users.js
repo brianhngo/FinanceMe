@@ -16,9 +16,13 @@ usersRouter.get('/', async (req, res) => {
 });
 
 // GET a particular User Information
-usersRouter.get('/', async (req, res) => {
+usersRouter.put('/userinfo', async (req, res) => {
   try {
-    const user = await Users.findOne({ where: { userIdentifer: req.body.id } });
+    const user = await Users.findOne({
+      where: {
+        userIdentifer: req.body.uid,
+      },
+    });
     if (user) {
       res.json(user);
     } else {

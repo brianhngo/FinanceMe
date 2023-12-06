@@ -38,7 +38,56 @@ const seed = async () => {
       userIdentifer: 'chicken',
     });
     await Transactions.create({
-      amount: 100.0,
+      amount: 800.0,
+      category: 'savings',
+      description: 'paycheck',
+      date: new Date(),
+      userIdentifer: 'cow',
+    });
+    await Transactions.create({
+      amount: 900.0,
+      category: 'savings',
+      description: 'paycheck',
+      date: new Date(),
+      userIdentifer: 'cow',
+    });
+    await Transactions.create({
+      amount: 20.0,
+      category: 'savings',
+      description: 'paycheck',
+      date: new Date(),
+      userIdentifer: 'cow',
+    });
+    await Transactions.create({
+      amount: 30.0,
+      category: 'savings',
+      description: 'paycheck',
+      date: new Date(),
+      userIdentifer: 'cow',
+    });
+    await Transactions.create({
+      amount: 60.0,
+      category: 'savings',
+      description: 'paycheck',
+      date: new Date(),
+      userIdentifer: 'cow',
+    });
+    await Transactions.create({
+      amount: 70.0,
+      category: 'savings',
+      description: 'paycheck',
+      date: new Date(),
+      userIdentifer: 'cow',
+    });
+    await Transactions.create({
+      amount: 80.0,
+      category: 'savings',
+      description: 'paycheck',
+      date: new Date(),
+      userIdentifer: 'cow',
+    });
+    await Transactions.create({
+      amount: 90.0,
       category: 'savings',
       description: 'paycheck',
       date: new Date(),

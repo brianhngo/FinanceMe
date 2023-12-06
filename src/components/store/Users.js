@@ -24,10 +24,16 @@ export const createNewUser = createAsyncThunk(
 );
 
 export const getUserInformation = createAsyncThunk(
-  'GET api/Users/',
-  async () => {
+  'GET/Users/userinfo',
+  async ({ uid }) => {
     try {
-      const { data } = await axios.get('http://localhost:3000/api/users/');
+      const { data } = await axios.put(
+        'http://localhost:3000/api/users/userinfo',
+        {
+          uid: uid,
+        }
+      );
+
       return data;
     } catch (error) {
       console.error(error);
@@ -39,7 +45,7 @@ const Users = createSlice({
   name: 'Users',
   initialState: {
     users: null,
-    userInformation: {},
+    userInformation: null,
   },
   reducers: {},
   extraReducers: (builder) => {

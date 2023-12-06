@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getTransactionList } from '../store/Transactions.js';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Transactions() {
+export default function Transactions({ uid }) {
+  const transactionList = useSelector(
+    (state) => state.Transactions.transactions
+  );
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (uid) {
+      dispatch(
+        getTransactionList({
+          uid: uid,
+        })
+      );
+    }
+  }, [uid]);
+
+  console.log('transactionList', transactionList);
   return (
     <section className="ml-5 mr-5 mt-5 mb-5 w-90 h-[90%]">
       <a
