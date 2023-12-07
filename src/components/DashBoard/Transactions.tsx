@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getTransactionList } from '../store/Transactions.js';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { toast } from 'react-toastify';
 export default function Transactions({ uid }) {
   const transactionList = useSelector(
     (state) => state.Transactions.transactions
@@ -10,8 +10,18 @@ export default function Transactions({ uid }) {
   // Keeping track of what page we are on
   const [page, setPage] = useState(1);
 
+  // Modal Status for Adding New Transaction
+  const [newTransactionModal, setNewTransactionModal] = useState(true);
+
+  // Modal Status for Editing Transactions
+  const [editTransactionModal, setEditTransactionModal] = useState(true);
+
   const increasePageHandler = async (event) => {
     try {
+      if (page * 10 > transactionList.count) {
+        return;
+      }
+
       event.preventDefault();
       setPage((prevPage) => {
         const newPage = prevPage + 1;
@@ -31,6 +41,9 @@ export default function Transactions({ uid }) {
 
   const decreasePageHandler = async (event) => {
     try {
+      if (page === 1) {
+        return;
+      }
       event.preventDefault();
       setPage((prevPage) => {
         const newPage = prevPage - 1;
