@@ -6,12 +6,13 @@ import axios from 'axios';
 
 export const getTransactionList = createAsyncThunk(
   'PUT/api/transactions/transactionslist',
-  async ({ uid }) => {
+  async ({ uid, page }) => {
     try {
       const { data } = await axios.put(
         'http://localhost:3000/api/transactions/transactionsList',
         {
           uid: uid,
+          page: page,
         }
       );
       console.log('data', data);
