@@ -23,10 +23,35 @@ export const getTransactionList = createAsyncThunk(
   }
 );
 
+// Add to Transaction
+
+export const addTransaction = createAsyncThunk(
+  'PUT/api/transactions/addTransaction',
+  async ({ amount, category, description, date, userIdentifer }) => {
+    try {
+      console.log(uid);
+      const { data } = await axios.put(
+        'http://localhost:3000/api/transactions/addTransaction',
+        {
+          category: category,
+          description: description,
+          amount: amount,
+          date: date,
+          userIdentifer: userIdentifer,
+        }
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const Transactions = createSlice({
   name: 'Transactions',
   initialState: {
     transactions: [],
+    addTransaction: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -36,6 +61,12 @@ const Transactions = createSlice({
       })
       .addCase(getTransactionList.rejected, (state, { payload }) => {
         state.transactions = [];
+      })
+      .addCase(addTransaction.fulfilled, (state, { payload }) => {
+        state.addTransaction = true;
+      })
+      .addCase(addTransaction.rejected, (state, { payload }) => {
+        state.addTransaction = false;
       });
   },
 });

@@ -27,4 +27,25 @@ transactionRouter.put('/transactionsList', async (req, res) => {
   }
 });
 
+transactionRouter.put('/addTransaction', async (req, res) => {
+  try {
+    const { amount, category, description, date, userIdentifer } = req.body;
+
+    const transaction = await Transactions.create({
+      amount: amount,
+      category: category,
+      description: description,
+      date: date,
+      userIdentifer: userIdentifer,
+    });
+    if (transaction) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 export default transactionRouter;

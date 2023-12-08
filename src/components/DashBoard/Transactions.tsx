@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { getTransactionList } from '../store/Transactions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import Modal from 'react-modal';
+import AddTransactionModal from './AddTransactionModal.js';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
 export default function Transactions({ uid }) {
   const transactionList = useSelector(
     (state) => state.Transactions.transactions
@@ -13,8 +27,26 @@ export default function Transactions({ uid }) {
   // Modal Status for Adding New Transaction
   const [newTransactionModal, setNewTransactionModal] = useState(true);
 
+  // Open/close Transaction Modal
+  const openTransactionModal = () => {
+    setNewTransactionModal(true);
+  };
+
+  const closeTransactionModal = () => {
+    setNewTransactionModal(false);
+  };
+
   // Modal Status for Editing Transactions
   const [editTransactionModal, setEditTransactionModal] = useState(true);
+
+  // Open/close Transaction Modal
+  const openEditTransactionModal = () => {
+    setEditTransactionModal(true);
+  };
+
+  const closeEditTransactionModal = () => {
+    setEditTransactionModal(false);
+  };
 
   const increasePageHandler = async (event) => {
     try {
@@ -81,7 +113,19 @@ export default function Transactions({ uid }) {
           Recent Transactions
         </h5>
         <div className=" pr-5 pb-5 flex justify-end align-middle">
-          <button className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+          <Modal
+            isOpen={newTransactionModal}
+            onRequestClose={closeTransactionModal}
+            style={customStyles}>
+            <AddTransactionModal
+              uid={uid}
+              closeModal={() => closeTransactionModal()}
+            />
+          </Modal>
+
+          <button
+            onClick={openTransactionModal}
+            className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
             Add Transaction
           </button>
         </div>

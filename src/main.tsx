@@ -7,6 +7,9 @@ import { Provider } from 'react-redux';
 import store from './components/store/index.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
