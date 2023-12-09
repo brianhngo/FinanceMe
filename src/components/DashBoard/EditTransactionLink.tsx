@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import EditTransactionModal from './EditTransactionModal';
-
+import { resetTransactionInfo } from '../store/Transactions.js';
+import { useDispatch } from 'react-redux';
 const customStyles2 = {
   content: {
     top: '50%',
@@ -17,12 +18,13 @@ const customStyles2 = {
 
 const EditTransactionLink = ({ transactionId, uid }) => {
   const [editTransactionModal, setEditTransactionModal] = useState(false);
-
+  const dispatch = useDispatch();
   const openEditTransactionModal = () => {
     setEditTransactionModal(true);
   };
 
   const closeEditTransactionModal = () => {
+    dispatch(resetTransactionInfo());
     setEditTransactionModal(false);
   };
 

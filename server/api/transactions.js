@@ -66,4 +66,63 @@ transactionRouter.put('/getTransaction', async (req, res) => {
   }
 });
 
+transactionRouter.put('/updateTransaction', async (req, res) => {
+  const { transactionId, userIdentifer, category, description, amount, date } =
+    req.body;
+
+  const transactions = await Transactions.findAll({
+    where: {
+      userIdentifer: userIdentifer,
+      id: transactionId,
+    },
+  });
+
+  if (transactions.length === 0) {
+    // No transaction found
+    res.status(404).json({ error: 'Transaction not found' });
+    return;
+  }
+
+  const transaction = transactions[0];
+
+  try {
+    await transaction.update({
+      amount: amount,
+      category: category,
+      description: description,
+      date: date,
+    });
+
+    res.status(200).json(true);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+transactionRouter.put('/deleteTransaction', async (req, res) => {
+  const { transactionId, userIdentifer } = req.body;
+
+  try {
+    const transaction = await Transactions.findOne({
+      where: {
+        userIdentifer: userIdentifer,
+        id: transactionId,
+      },
+    });
+
+    if (!transaction) {
+      res.status(404).json({ error: 'Transaction not found' });
+      return;
+    }
+
+    await transaction.destroy();
+
+    res.status(200).json(true);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 export default transactionRouter;

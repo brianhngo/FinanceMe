@@ -67,6 +67,52 @@ export const getTransaction = createAsyncThunk(
 );
 
 // Edit Transaction & Save Transaction Change
+export const updateTransaction = createAsyncThunk(
+  'GET/api/transactions/updateTransaction',
+  async ({
+    transactionId,
+    userIdentifer,
+    category,
+    description,
+    amount,
+    transactionDate,
+  }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/transactions/updateTransaction',
+        {
+          transactionId: transactionId,
+          userIdentifer: userIdentifer,
+          category: category,
+          description: description,
+          amount: amount,
+          date: transactionDate,
+        }
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const deleteTransaction = createAsyncThunk(
+  'GET/api/transactions/updateTransaction',
+  async ({ transactionId, userIdentifer }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/transactions/deleteTransaction',
+        {
+          transactionId: transactionId,
+          userIdentifer: userIdentifer,
+        }
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 
 const Transactions = createSlice({
   name: 'Transactions',
@@ -74,8 +120,14 @@ const Transactions = createSlice({
     transactions: [],
     addTransaction: null,
     transactionInfo: [],
+    updateStatus: null,
   },
-  reducers: {},
+  reducers: {
+    resetTransactionInfo: (state) => {
+      state.transactionInfo = [];
+    },
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(getTransactionList.fulfilled, (state, { payload }) => {
@@ -98,8 +150,17 @@ const Transactions = createSlice({
       })
       .addCase(getTransaction.rejected, (state, { payload }) => {
         state.transactionInfo = null;
+      })
+      .addCase(updateTransaction.fulfilled, (state, { payload }) => {
+        state.updateStatus = true;
+      })
+      .addCase(updateTransaction.rejected, (state, { payload }) => {
+        state.updateStatus = false;
+      })
+      .addCase(updateTransaction.pending, (state) => {
+        state.updateStatus = null;
       });
   },
 });
-
+export const { resetTransactionInfo } = Transactions.actions;
 export default Transactions.reducer;
