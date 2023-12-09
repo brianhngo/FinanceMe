@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
 import AddTransactionModal from './AddTransactionModal.js';
+import EditTransactionLink from './EditTransactionLink.js';
 
 const customStyles = {
   content: {
@@ -13,6 +14,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    zIndex: 1,
   },
 };
 
@@ -25,7 +27,7 @@ export default function Transactions({ uid }) {
   const [page, setPage] = useState(1);
 
   // Modal Status for Adding New Transaction
-  const [newTransactionModal, setNewTransactionModal] = useState(true);
+  const [newTransactionModal, setNewTransactionModal] = useState(false);
 
   // Open/close Transaction Modal
   const openTransactionModal = () => {
@@ -34,18 +36,6 @@ export default function Transactions({ uid }) {
 
   const closeTransactionModal = () => {
     setNewTransactionModal(false);
-  };
-
-  // Modal Status for Editing Transactions
-  const [editTransactionModal, setEditTransactionModal] = useState(true);
-
-  // Open/close Transaction Modal
-  const openEditTransactionModal = () => {
-    setEditTransactionModal(true);
-  };
-
-  const closeEditTransactionModal = () => {
-    setEditTransactionModal(false);
   };
 
   const increasePageHandler = async (event) => {
@@ -113,6 +103,7 @@ export default function Transactions({ uid }) {
           Recent Transactions
         </h5>
         <div className=" pr-5 pb-5 flex justify-end align-middle">
+          {/* Add Transaction Modal  */}
           <Modal
             isOpen={newTransactionModal}
             onRequestClose={closeTransactionModal}
@@ -176,11 +167,10 @@ export default function Transactions({ uid }) {
                             {transaction.updatedAt.slice(0, 10)}
                           </td>
                           <td className="px-6 py-4 text-right">
-                            <a
-                              href="#"
-                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                              Edit
-                            </a>
+                            <EditTransactionLink
+                              uid={uid}
+                              transactionId={transaction.id}
+                            />
                           </td>
                         </tr>
                       </>

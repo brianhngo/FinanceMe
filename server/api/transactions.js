@@ -30,7 +30,6 @@ transactionRouter.put('/transactionsList', async (req, res) => {
 transactionRouter.put('/addTransaction', async (req, res) => {
   try {
     const { amount, category, description, date, userIdentifer } = req.body;
-
     const transaction = await Transactions.create({
       amount: amount,
       category: category,
@@ -42,6 +41,25 @@ transactionRouter.put('/addTransaction', async (req, res) => {
       res.json(true);
     } else {
       res.json(false);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+transactionRouter.put('/getTransaction', async (req, res) => {
+  try {
+    const { userIdentifer, id } = req.body;
+    const transaction = await Transactions.findAll({
+      where: {
+        userIdentifer: userIdentifer,
+        id: id,
+      },
+    });
+    if (transaction) {
+      res.json(transaction);
+    } else {
+      res.json(null);
     }
   } catch (error) {
     console.error(error);

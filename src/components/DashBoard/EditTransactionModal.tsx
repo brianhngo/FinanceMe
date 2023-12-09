@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { addTransaction, getTransactionList } from '../store/Transactions.js';
+import { getTransaction } from '../store/Transactions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-export default function AddTransactionModal({ uid, closeModal }) {
+export default function EditTransactionModal({ uid, closeModal }) {
   const transactionStatus = useSelector(
     (state) => state.Transactions.addTransaction
   );
@@ -27,37 +27,6 @@ export default function AddTransactionModal({ uid, closeModal }) {
 
   const transactionDateHandler = (event) => {
     setTransactionDate(event.target.value);
-  };
-
-  const buttonHandler = async (event) => {
-    try {
-      event.preventDefault();
-      await dispatch(
-        addTransaction({
-          category: category,
-          description: description,
-          amount: amount,
-          date: transactionDate,
-          userIdentifer: uid,
-        })
-      );
-
-      await dispatch(
-        getTransactionList({
-          uid: uid,
-          page: 1,
-        })
-      );
-      if (transactionStatus) {
-        toast.success('Added!');
-        closeModal();
-      } else {
-        toast.error('Error');
-        closeModal();
-      }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
@@ -84,7 +53,7 @@ export default function AddTransactionModal({ uid, closeModal }) {
         <span className="sr-only">Close modal</span>
       </button>
       <div>
-        <h1 className="text-center text-3xl mt-5 mb-5 "> Add Transaction </h1>
+        <h1 className="text-center text-3xl mt-5 mb-5 "> Edit Transaction </h1>
         <form className="max-w-md mx-auto">
           <div className="relative z-0 w-full mb-5 group">
             <input
@@ -156,7 +125,7 @@ export default function AddTransactionModal({ uid, closeModal }) {
           </div>
           <button
             type="submit"
-            onClick={buttonHandler}
+            // onClick={buttonHandler}
             className="block text-white bg-blue-700 mx-auto hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Submit
           </button>
