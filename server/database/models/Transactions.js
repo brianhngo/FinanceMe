@@ -13,7 +13,21 @@ const Transactions = db.define('Transaction', {
   category: {
     type: Sequelize.STRING(50),
     allowNull: false,
-    isIn: [['bills', 'savings', 'loans']],
+    isIn: [
+      [
+        'Loans',
+        'Utilities',
+        'Clothing',
+        'Rent',
+        'Groceries',
+        'Transportation',
+        'Health',
+        'Gas',
+        'Savings',
+        'Activities',
+        'Other',
+      ],
+    ],
   },
   description: {
     type: Sequelize.TEXT,
