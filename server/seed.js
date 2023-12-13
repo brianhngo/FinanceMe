@@ -21,7 +21,7 @@ const seed = async () => {
     await Transactions.create({
       amount: 800.0,
       category: 'Savings',
-      description: 'paycheck',
+      description: 'Paycheck',
       date: new Date(),
       userIdentifer: 'cow',
     });

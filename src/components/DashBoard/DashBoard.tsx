@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function DashBoard() {
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.Users.userInformation);
-  console.log('userInfo', userInfo);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,9 +34,7 @@ export default function DashBoard() {
     };
   }, [dispatch, navigate, userInfo]);
 
-  useEffect(() => {
-    console.log('userInfo changed:', userInfo);
-  }, [userInfo]);
+  useEffect(() => {}, [userInfo]);
 
   return (
     <section className="flex w-screen h-screen">

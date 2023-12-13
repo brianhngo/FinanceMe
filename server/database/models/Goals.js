@@ -22,7 +22,6 @@ const Goals = db.define('Goals', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isIn: [['savings', 'bills', 'loan']],
     },
   },
   deadline: {

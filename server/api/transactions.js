@@ -1,5 +1,7 @@
 import express from 'express';
 import { Transactions } from '../database/models/index.js';
+import { Sequelize, QueryTypes } from 'sequelize';
+import { db } from '../database/models/index.js';
 
 const transactionRouter = express.Router();
 
@@ -27,6 +29,7 @@ transactionRouter.put('/transactionsList', async (req, res) => {
   }
 });
 
+// PUT Route Adding a transaction for the user
 transactionRouter.put('/addTransaction', async (req, res) => {
   try {
     const { amount, category, description, date, userIdentifer } = req.body;
@@ -47,6 +50,7 @@ transactionRouter.put('/addTransaction', async (req, res) => {
   }
 });
 
+// get that transaction information of particular one
 transactionRouter.put('/getTransaction', async (req, res) => {
   try {
     const { userIdentifer, id } = req.body;
@@ -66,6 +70,7 @@ transactionRouter.put('/getTransaction', async (req, res) => {
   }
 });
 
+// updating transaction
 transactionRouter.put('/updateTransaction', async (req, res) => {
   const { transactionId, userIdentifer, category, description, amount, date } =
     req.body;
@@ -100,6 +105,7 @@ transactionRouter.put('/updateTransaction', async (req, res) => {
   }
 });
 
+// deleting transaction
 transactionRouter.put('/deleteTransaction', async (req, res) => {
   const { transactionId, userIdentifer } = req.body;
 
@@ -119,6 +125,52 @@ transactionRouter.put('/deleteTransaction', async (req, res) => {
     await transaction.destroy();
 
     res.status(200).json(true);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Monthly Expenses
+transactionRouter.put('/getMonthlyExpenses', async (req, res) => {
+  try {
+    const { userIdentifer } = req.body;
+
+    const data = await db.query(
+      `SELECT * FROM "Transactions" WHERE EXTRACT(MONTH FROM "Transactions"."updatedAt") = EXTRACT(MONTH FROM CURRENT_TIMESTAMP) AND "Transactions"."userIdentifer" = '${userIdentifer}' `,
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+
+    if (data !== undefined && data !== null) {
+      const obj2 = {};
+      data.forEach((row) => {
+        if (!obj2[row.category]) {
+          obj2[row.category] = row.amount;
+        } else {
+          obj2[row.category] += row.amount;
+        }
+      });
+
+      const test2 = Object.keys(obj2);
+      const test3 = Object.values(obj2);
+
+      const result = {
+        labels: test2,
+        datasets: [
+          {
+            label: 'Monthly Spending Breakdown by Category',
+            data: test3,
+            backgroundColor: ['red', 'blue'],
+          },
+        ],
+      };
+
+      res.json(result);
+    } else {
+      res.json(false);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

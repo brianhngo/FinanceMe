@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import axios from 'axios';
+import { create } from 'domain';
 import { user } from 'pg/lib/defaults';
 
 // getting list of transactions per specific user
@@ -16,7 +17,7 @@ export const getTransactionList = createAsyncThunk(
           page: page,
         }
       );
-      console.log('data', data);
+
       return data;
     } catch (error) {
       console.error(error);
@@ -114,6 +115,24 @@ export const deleteTransaction = createAsyncThunk(
   }
 );
 
+// Monthly Spending Breakdown
+export const getMonthlyExpenses = createAsyncThunk(
+  'PUT /api/transactions/getMonthlyExpenses',
+  async ({ userIdentifer }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/transactions/getMonthlyExpenses',
+        {
+          userIdentifer: userIdentifer,
+        }
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const Transactions = createSlice({
   name: 'Transactions',
   initialState: {
@@ -121,6 +140,7 @@ const Transactions = createSlice({
     addTransaction: null,
     transactionInfo: [],
     updateStatus: null,
+    monthlyTransactions: null,
   },
   reducers: {
     resetTransactionInfo: (state) => {
@@ -159,6 +179,9 @@ const Transactions = createSlice({
       })
       .addCase(updateTransaction.pending, (state) => {
         state.updateStatus = null;
+      })
+      .addCase(getMonthlyExpenses.fulfilled, (state, { payload }) => {
+        state.monthlyTransactions = payload;
       });
   },
 });
