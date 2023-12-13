@@ -47,7 +47,12 @@ const Users = createSlice({
     users: null,
     userInformation: null,
   },
-  reducers: {},
+  reducers: {
+    logoutUser2: (state) => {
+      state.users = null;
+      state.userInformation = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createNewUser.fulfilled, (state, { payload }) => {
@@ -65,5 +70,5 @@ const Users = createSlice({
       });
   },
 });
-
+export const { logoutUser2 } = Users.actions;
 export default Users.reducer;

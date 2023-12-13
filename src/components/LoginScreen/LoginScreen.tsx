@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { auth } from '../../../firebase/firebaseConfig.js';
 
@@ -34,7 +35,6 @@ export default function LoginScreen(): React.FC {
 
   // Sign In Handler
   const handleSignIn = async (e: MouseEvent): Promise<void> => {
-    e.preventDefault();
     try {
       const isSuccessful = await signInWithEmailAndPassword(
         auth,
@@ -68,6 +68,18 @@ export default function LoginScreen(): React.FC {
       setPassword('');
     }
   };
+
+  useEffect(() => {
+    // Check if the user is already signed in
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate('/dashboard');
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <section className="h-screen w-screen md:h-full flex justify-center items-center bg-gray-50 dark:bg-gray-900">

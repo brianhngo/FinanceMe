@@ -146,6 +146,13 @@ const Transactions = createSlice({
     resetTransactionInfo: (state) => {
       state.transactionInfo = [];
     },
+    logoutUser: (state) => {
+      state.transactions = [];
+      state.addTransaction = null;
+      state.transactionInfo = [];
+      state.updateStatus = null;
+      state.monthlyTransactions = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -185,5 +192,5 @@ const Transactions = createSlice({
       });
   },
 });
-export const { resetTransactionInfo } = Transactions.actions;
+export const { resetTransactionInfo, logoutUser } = Transactions.actions;
 export default Transactions.reducer;

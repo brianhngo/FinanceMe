@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../../../firebase/firebaseConfig.js';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-
+import { logoutUser } from '../store/Transactions.js';
+import { logoutUser2 } from '../store/Users.js';
+import { useDispatch } from 'react-redux';
 export default function SideBar({ userInfo }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logoutHander = (event) => {
-    event.preventDefault();
     signOut(auth)
       .then(() => {
+        dispatch(logoutUser());
+        dispatch(logoutUser2());
         navigate('/');
       })
       .catch((error) => {

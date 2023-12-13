@@ -147,9 +147,9 @@ transactionRouter.put('/getMonthlyExpenses', async (req, res) => {
       const obj2 = {};
       data.forEach((row) => {
         if (!obj2[row.category]) {
-          obj2[row.category] = row.amount;
+          obj2[row.category] = parseInt(row.amount);
         } else {
-          obj2[row.category] += row.amount;
+          obj2[row.category] += parseInt(row.amount);
         }
       });
 
@@ -160,9 +160,22 @@ transactionRouter.put('/getMonthlyExpenses', async (req, res) => {
         labels: test2,
         datasets: [
           {
-            label: 'Monthly Spending Breakdown by Category',
+            label: 'Amount spent (in $)',
             data: test3,
-            backgroundColor: ['red', 'blue'],
+            backgroundColor: [
+              'red', // Red
+              'green', // Green
+              'blue', // Blue
+              'pink', // Pink
+              'yellow', // Yellow
+              'purple', // Purple
+              'cyan', // Cyan
+              'brown', // Dark Pink
+              'black', // Turquoise
+              'gray', // Orange
+              'orange', // Violet
+            ],
+            borderColor: ['black'],
           },
         ],
       };
