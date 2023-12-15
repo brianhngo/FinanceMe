@@ -9,7 +9,7 @@ export default function Content({ uid }): React.FC {
         <LeftContent uid={uid} />
       </div>
       <div className="col-span-2 md:col-span-2">
-        <RightContent />
+        <RightContent uid={uid} />
       </div>
     </div>
   );

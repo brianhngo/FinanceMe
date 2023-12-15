@@ -130,7 +130,7 @@ export default function Transactions({ uid }) {
                 <th scope="col" className="px-6 py-3">
                   <div className="flex items-center">
                     Category
-                    <a href="#">
+                    <a href="#" onClick={(event) => event.preventDefault()}>
                       <svg
                         className="w-3 h-3 ms-1.5"
                         aria-hidden="true"

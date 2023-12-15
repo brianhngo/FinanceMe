@@ -17,7 +17,6 @@ export const getTransactionList = createAsyncThunk(
           page: page,
         }
       );
-
       return data;
     } catch (error) {
       console.error(error);
@@ -133,6 +132,27 @@ export const getMonthlyExpenses = createAsyncThunk(
   }
 );
 
+// Category Timeline Comparison
+export const categoryComparison = createAsyncThunk(
+  'PUT /api/transactions/categoryComparison',
+  async ({ userIdentifer, category, timeframe }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/transactions/categoryComparison',
+        {
+          userIdentifer: userIdentifer,
+          category: category,
+          timeframe: timeframe,
+        }
+      );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const Transactions = createSlice({
   name: 'Transactions',
   initialState: {
@@ -141,6 +161,7 @@ const Transactions = createSlice({
     transactionInfo: [],
     updateStatus: null,
     monthlyTransactions: null,
+    categoryComparison: null,
   },
   reducers: {
     resetTransactionInfo: (state) => {
@@ -152,6 +173,7 @@ const Transactions = createSlice({
       state.transactionInfo = [];
       state.updateStatus = null;
       state.monthlyTransactions = null;
+      state.categoryComparison = null;
     },
   },
 
@@ -189,6 +211,9 @@ const Transactions = createSlice({
       })
       .addCase(getMonthlyExpenses.fulfilled, (state, { payload }) => {
         state.monthlyTransactions = payload;
+      })
+      .addCase(categoryComparison.fulfilled, (state, { payload }) => {
+        state.categoryComparison = payload;
       });
   },
 });
