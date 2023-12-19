@@ -3,29 +3,6 @@ import { categoryComparison } from '../store/Transactions.js';
 import { useDispatch, useSelector } from 'react-redux';
 import BarChart from './Charts/BarChart.js';
 
-// const emptyData = {
-//   labels: [],
-//   datasets: [
-//     {
-//       label: 'test',
-//       data: [],
-//       backgroundColor: [],
-//     },
-//   ],
-// };
-
-const emptyData = {
-  labels: ['2023-09', '2023-10', '2023-11', '2023-12'],
-  datasets: [
-    {
-      label: 'Amount spent (in $) for Loans ',
-      data: [100, 100, 30, 132],
-      backgroundColor: ['red', 'green', 'blue', 'pink'],
-      borderColor: ['black'],
-    },
-  ],
-};
-
 export default function MonthlyTrends({ userIdentifer }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.Transactions.categoryComparison);
@@ -59,15 +36,24 @@ export default function MonthlyTrends({ userIdentifer }) {
         href="#"
         className="block w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition-transform transform-gpu hover:-translate-y-2">
         <h5 className="mt-2 mb-2 text-4xl font-bold tracking-tight text-center text-gray-900 dark:text-white">
-          Category Spending Trends: An In-Depth Analysis Over a Defined
-          Timeframe
+          Category Trends: Monthly Spending Analysis
         </h5>
         <div className="relative z-0 w-full mb-5 group">
-          <label
-            htmlFor="countries"
-            className="block mb-2 text-lg text-center font-medium text-white">
-            Pick a Category and Timeline You would want to see
-          </label>
+          {timeframe === null || category === null ? (
+            <label
+              htmlFor="countries"
+              className="block mb-2 text-lg text-center font-medium text-white">
+              Please Select a Timeline You would want to see
+            </label>
+          ) : (
+            <label className="block mb-2 text-lg text-center font-medium text-white">
+              {timeframe === 'alltime'
+                ? `All Time Month by Month Expenses for ${category}`
+                : `Last ${
+                    parseInt(timeframe) + 1
+                  } months to Present for ${category}`}
+            </label>
+          )}
           <div className="flex flex-col">
             <select
               id="countries"
@@ -97,10 +83,10 @@ export default function MonthlyTrends({ userIdentifer }) {
               <option disabled selected>
                 Select a Timeframe
               </option>
-              <option value="3">Last 3 months</option>
-              <option value="6">Last 6 months</option>
-              <option value="12">Last 1 year</option>
-              <option value="24">Last 2 years</option>
+              <option value="2">Last 3 months</option>
+              <option value="5">Last 6 months</option>
+              <option value="11">Last 1 year</option>
+              <option value="23">Last 2 years</option>
               <option value="alltime">All time</option>
             </select>
           </div>

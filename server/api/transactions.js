@@ -233,9 +233,96 @@ transactionRouter.put('/categoryComparison', async (req, res) => {
         labels: monthArray,
         datasets: [
           {
-            label: `Amount spent (in $) for ${category} `,
+            // label: `Amount spent (in $) for ${category} `,
             data: totalAmountArray,
-            backgroundColor: ['red', 'green', 'blue', 'pink'],
+            backgroundColor: [
+              'red', // Red
+              'green', // Green
+              'blue', // Blue
+              'pink', // Pink
+              'yellow', // Yellow
+              'purple', // Purple
+              'cyan', // Cyan
+              'brown', // Dark Pink
+              'black', // Turquoise
+              'gray', // Orange
+              'orange', // Violet
+            ],
+            borderColor: ['black'],
+          },
+        ],
+      };
+
+      res.json(result);
+    } else {
+      res.json(false);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// Month by Month Total Expense Timeline Comparison
+transactionRouter.put('/totalExpenseComparison', async (req, res) => {
+  try {
+    const { userIdentifer, timeframe } = req.body;
+    let timeCondition = null;
+
+    if (timeframe === 'alltime') {
+      // If 'alltime', no specific time condition is needed
+      timeCondition = '';
+    } else {
+      // For specific timeframes, add the appropriate time condition
+      timeCondition = `"Transactions"."date" >= DATE_TRUNC('MONTH', CURRENT_TIMESTAMP) - INTERVAL '${timeframe} months'`;
+    }
+
+    const data = await db.query(
+      `
+    SELECT SUM(sub.amount) AS total, sub.month
+    FROM
+        (
+    SELECT 
+        *, 
+        TO_CHAR(DATE_TRUNC('MONTH', "Transactions"."date"), 'YYYY-MM') AS month 
+      FROM "Transactions" 
+      WHERE 
+       ${timeCondition}
+        AND "Transactions"."date" < DATE_TRUNC('MONTH', CURRENT_TIMESTAMP) + INTERVAL '1 month'
+        AND "Transactions"."userIdentifer" = '${userIdentifer}'
+        AND "Transactions"."category" <> 'Savings'
+        ) as sub
+        GROUP BY sub.month
+        ORDER BY sub.month ASC;
+    `,
+      {
+        type: QueryTypes.SELECT,
+      }
+    );
+
+    if (data !== undefined && data !== null) {
+      // Extracting total_amount and month arrays using map
+      const totalAmountArray = data.map((row) => parseInt(row.total));
+      const monthArray = data.map((row) => row.month);
+
+      const result = {
+        labels: monthArray,
+        datasets: [
+          {
+            // label: `Amount spent (in $) for ${category} `,
+            data: totalAmountArray,
+            backgroundColor: [
+              'red', // Red
+              'green', // Green
+              'blue', // Blue
+              'pink', // Pink
+              'yellow', // Yellow
+              'purple', // Purple
+              'cyan', // Cyan
+              'brown', // Dark Pink
+              'black', // Turquoise
+              'gray', // Orange
+              'orange', // Violet
+            ],
             borderColor: ['black'],
           },
         ],

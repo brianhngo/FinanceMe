@@ -1,9 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import 'chart.piecelabel.js';
 
 const BarChart = ({ chartData }) => {
-  console.log('chartData', chartData);
   return (
     <>
       <Bar
@@ -11,21 +9,39 @@ const BarChart = ({ chartData }) => {
         options={{
           plugins: {
             legend: {
-              labels: {
-                color: 'white',
-                font: {
-                  size: 18,
-                },
-              },
+              display: false,
             },
             datalabels: {
               color: 'white',
               font: {
-                size: 12,
+                size: 16,
               },
             },
           },
-
+          scales: {
+            x: {
+              ticks: {
+                color: 'white',
+                font: {
+                  size: 20,
+                },
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.5)',
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white',
+                font: {
+                  size: 20,
+                },
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.5)',
+              },
+            },
+          },
           maintainAspectRatio: false,
         }}
       />
