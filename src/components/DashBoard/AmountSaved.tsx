@@ -1,6 +1,17 @@
 import React from 'react';
+import DoughnutChart from './Charts/DoughnutChart';
 
-export default function AmountSaved() {
+const emptyData = {
+  labels: ['Yes', 'No'],
+  datasets: [
+    {
+      label: 'Poll',
+      data: [3, 6],
+      backgroundColor: ['black', 'red'],
+    },
+  ],
+};
+export default function AmountSaved({ userIdentifer }) {
   return (
     <section className="ml-5 mr-5 mt-5 mb-5 w-90 h-[90%]">
       <a
@@ -13,6 +24,9 @@ export default function AmountSaved() {
           Here are the biggest enterprise technology acquisitions of 2021 so
           far, in reverse chronological order.
         </p>
+        <div className="w-[50%] h-[50%]">
+          <DoughnutChart chartData={emptyData} />
+        </div>
       </a>
     </section>
   );
