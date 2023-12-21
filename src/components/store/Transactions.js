@@ -173,6 +173,42 @@ export const totalExpensesComparison = createAsyncThunk(
   }
 );
 
+// Savings Goal Transactions => Getting All Transactions that are Savings and Goal Amount Total
+
+export const saveTransactions = createAsyncThunk(
+  'PUT /api/transactions/saveTransactions',
+  async () => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/transactions/saveTransactions',
+        {}
+      );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+// // Budget Transactions  Setting a Budget => Taking Budget - All Transactions that aren't labeled "savings"
+
+export const budgetTransactions = createAsyncThunk(
+  'PUT /api/transactions/budgetTransactions',
+  async () => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/transactions/budgetTransactions',
+        {}
+      );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const Transactions = createSlice({
   name: 'Transactions',
   initialState: {
@@ -183,6 +219,8 @@ const Transactions = createSlice({
     monthlyTransactions: null,
     categoryComparison: null,
     totalExpensesComparison: null,
+    savingsTransactionsData: null,
+    budgetTransactionsData: null,
   },
   reducers: {
     resetTransactionInfo: (state) => {
@@ -196,6 +234,8 @@ const Transactions = createSlice({
       state.monthlyTransactions = null;
       state.categoryComparison = null;
       state.totalExpensesComparison = null;
+      state.savingsTransactionsData = null;
+      state.budgetTransactionsData = null;
     },
   },
 
@@ -239,6 +279,12 @@ const Transactions = createSlice({
       })
       .addCase(totalExpensesComparison.fulfilled, (state, { payload }) => {
         state.totalExpensesComparison = payload;
+      })
+      .addCase(saveTransactions.fulfilled, (state, { payload }) => {
+        state.savingsTransactionsData = payload;
+      })
+      .addCase(budgetTransactions.fulfilled, (state, { payload }) => {
+        state.budgetTransactionsData = payload;
       });
   },
 });

@@ -1,29 +1,32 @@
 import { Sequelize } from 'sequelize';
 import db from './db.js';
 
-const Goals = db.define('Goals', {
-  target_amount: {
+const Bills = db.define('Bills', {
+  // PK and foreign key will be written when model is created by postgres
+  amount: {
     type: Sequelize.DECIMAL(10, 2),
     allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
-  current_amount: {
-    type: Sequelize.DECIMAL(10, 2),
+  description: {
+    type: Sequelize.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
-  goal_type: {
+  isRecurring: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  recurrenceInterval: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
+    allowNull: true,
   },
-  deadline: {
+  date: {
     type: Sequelize.DATE,
     allowNull: false,
     validate: {
@@ -32,4 +35,4 @@ const Goals = db.define('Goals', {
   },
 });
 
-export default Goals;
+export default Bills;

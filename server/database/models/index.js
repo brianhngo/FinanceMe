@@ -5,6 +5,9 @@ import db from './db.js';
 import Users from './Users.js';
 import Transactions from './Transactions.js';
 import Goals from './Goals.js';
+import Bills from './Bills.js';
+import Budgets from './Budget.js';
+import Savings from './Savings.js';
 
 Goals.belongsTo(Users, {
   foreignKey: 'userIdentifer',
@@ -15,7 +18,6 @@ Users.hasMany(Goals, {
   sourceKey: 'userIdentifer',
 });
 
-// Set up the foreign key relationship for Transactions
 Transactions.belongsTo(Users, {
   foreignKey: 'userIdentifer',
   targetKey: 'userIdentifer',
@@ -25,4 +27,32 @@ Users.hasMany(Transactions, {
   sourceKey: 'userIdentifer',
 });
 
-export { db, Users, Transactions, Goals };
+Bills.belongsTo(Users, {
+  foreignKey: 'userIdentifer',
+  targetKey: 'userIdentifer',
+});
+Users.hasMany(Bills, {
+  foreignKey: 'userIdentifer',
+  sourceKey: 'userIdentifer',
+});
+
+Budgets.belongsTo(Users, {
+  foreignKey: 'userIdentifer',
+  sourceKey: 'userIdentifer',
+});
+Users.hasOne(Budgets, {
+  foreignKey: 'userIdentifer',
+  sourceKey: 'userIdentifer',
+});
+
+Users.hasOne(Savings, {
+  foreignKey: 'userIdentifer',
+  sourceKey: 'userIdentifer',
+});
+
+Savings.belongsTo(Users, {
+  foreignKey: 'userIdentifer',
+  sourceKey: 'userIdentifer',
+});
+
+export { db, Users, Transactions, Goals, Bills, Budgets, Savings };

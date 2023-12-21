@@ -43,7 +43,7 @@ usersRouter.put('/createUser', async (req, res) => {
       email: req.body.email,
       name: req.body.name || null,
     });
-    console.log(newUser);
+
     if (newUser) {
       res.send(true);
     } else {

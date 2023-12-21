@@ -41,6 +41,43 @@ export const getUserInformation = createAsyncThunk(
   }
 );
 
+export const setBudgetAmount = createAsyncThunk(
+  'GET/Users/setBudgetinfo',
+  async ({ userIdentifer, amount }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/users/setBudget',
+        {
+          userIdentifer: userIdentifer,
+          amount: amount,
+        }
+      );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const getBudgetAmount = createAsyncThunk(
+  'GET/Users/getBudgetinfo',
+  async ({ userIdentifer }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/users/getBudget',
+        {
+          userIdentifer: userIdentifer,
+        }
+      );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const Users = createSlice({
   name: 'Users',
   initialState: {
@@ -57,7 +94,6 @@ const Users = createSlice({
     builder
       .addCase(createNewUser.fulfilled, (state, { payload }) => {
         state.users = payload;
-        console.log(payload);
       })
       .addCase(createNewUser.rejected, (state, { payload }) => {
         state.users = payload;
@@ -70,5 +106,6 @@ const Users = createSlice({
       });
   },
 });
+
 export const { logoutUser2 } = Users.actions;
 export default Users.reducer;

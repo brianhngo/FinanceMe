@@ -104,15 +104,6 @@ export default function Transactions({ uid }) {
         </h5>
         <div className=" pr-5 pb-5 flex justify-end align-middle">
           {/* Add Transaction Modal  */}
-          <Modal
-            isOpen={newTransactionModal}
-            onRequestClose={closeTransactionModal}
-            style={customStyles}>
-            <AddTransactionModal
-              uid={uid}
-              closeModal={() => closeTransactionModal()}
-            />
-          </Modal>
 
           <button
             onClick={openTransactionModal}
