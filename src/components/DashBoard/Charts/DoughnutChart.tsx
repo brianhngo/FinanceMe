@@ -12,7 +12,7 @@ export default function DoughnutChart({ chartData }) {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(
-        `Value: ${data.datasets[0].data}`,
+        `Value: ${data.datasets[1].data}`,
         chart.getDatasetMeta(0).data[0].x,
         chart.getDatasetMeta(0).data[0].y
       );

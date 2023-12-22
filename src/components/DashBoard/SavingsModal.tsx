@@ -1,39 +1,71 @@
 import React, { useState, useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-
+import { setSavingsAmount, getSavingsAmount } from '../store/Savings.js';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function SavingsModal({ uid, closeModal }) {
   const dispatch = useDispatch();
-
+  const data = useSelector((state) => state.Savings.getSavings);
   const [budget, setBudget] = useState(0);
 
   const budgetHandler = (event) => {
     setBudget(event.target.value);
   };
 
-  const [startDate, setStartDate] = useState(null);
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
+  const [startDate, setStartDate] = useState();
+  const handleStartDateChange = (event) => {
+    setStartDate(event.target.value);
   };
 
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState();
 
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
+  const handleEndDateChange = (event) => {
+    setEndDate(event.target.value);
   };
 
   const buttonHandler = (event) => {
     event.preventDefault();
-
+    dispatch(
+      setSavingsAmount({
+        userIdentifer: uid,
+        status: true,
+        amount: budget,
+        date: startDate,
+        endDate: endDate,
+      })
+    );
     toast.success('Successfully Added!');
     closeModal();
   };
 
+  useEffect(() => {
+    dispatch(getSavingsAmount({ userIdentifer: uid }));
+  }, [uid]);
+
+  useEffect(() => {
+    if (data === null) {
+      setBudget(0);
+      setEndDate(''); // Set to empty string instead of null
+      setStartDate(''); // Set to empty string instead of null
+    } else {
+      setBudget(data.amount);
+
+      // Ensure data.date and data.endDate are not null before slicing
+      const startDate = data.date
+        ? new Date(data.date).toISOString().slice(0, 10)
+        : '';
+      const endDate = data.endDate
+        ? new Date(data.endDate).toISOString().slice(0, 10)
+        : '';
+
+      setStartDate(startDate);
+      setEndDate(endDate);
+    }
+  }, [data]);
+  console.log(budget, 'budget', 'startDate', startDate, 'endDate', endDate);
   return (
     <div className="flex flex-col w-[500px] h-[500px]">
       <button
@@ -59,8 +91,7 @@ export default function SavingsModal({ uid, closeModal }) {
       </button>
       <div>
         <h1 className="text-center text-4xl mt-5 mb-[10%] ">
-          {' '}
-          Set Your Savings Tracker{' '}
+          Set Your Savings Tracker
         </h1>
         <form className="max-w-md mt-5 mx-auto">
           <div className="relative mx-auto z-0 w-full mb-5 group">
@@ -86,23 +117,25 @@ export default function SavingsModal({ uid, closeModal }) {
                 htmlFor="datePicker">
                 Select a Start Date:
               </label>
-              <DatePicker
+              <input
+                type="date"
                 className="mx-auto mb-1 text-center block py-2.5 px-0 w-[300px] text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black-100 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                selected={startDate}
+                value={startDate}
                 onChange={handleStartDateChange}
-                dateFormat="yyyy-MM-dd"
+                required
               />
             </div>
             <div className="flex flex-col">
               <label
                 className="mt-1 mb-1 mx-auto text-center text-2xl"
                 htmlFor="datePicker">
-                Select a End Date:
+                Select an End Date:
               </label>
-              <DatePicker
-                selected={endDate}
+              <input
+                type="date"
+                value={endDate}
+                required
                 onChange={handleEndDateChange}
-                dateFormat="yyyy-MM-dd"
                 className="mx-auto mb-1 text-center block py-2.5 px-0 w-[300px] text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black-100 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               />
             </div>

@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import BudgetModal from './BudgetModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBudgetChartData } from '../store/Budgets.js';
+import { getSavingsChartData } from '../store/Savings.js';
 import SavingsModal from './SavingsModal.js';
 
 const emptyData = {
@@ -32,7 +33,9 @@ const customStyles = {
 
 export default function AmountSaved({ userIdentifer }) {
   const data1 = useSelector((state) => state.Budgets.getBudgetChartDatas);
-  console.log('data1', data1);
+  const data2 = useSelector((state) => state.Savings.SavingsChartDatas);
+  console.log('data2', data2);
+
   // Modal Status for Adding New Transaction
   const dispatch = useDispatch();
   const [budgetModal, setBudgetModal] = useState(false);
@@ -60,6 +63,11 @@ export default function AmountSaved({ userIdentifer }) {
   useEffect(() => {
     dispatch(
       getBudgetChartData({
+        userIdentifer: userIdentifer,
+      })
+    );
+    dispatch(
+      getSavingsChartData({
         userIdentifer: userIdentifer,
       })
     );
@@ -110,7 +118,7 @@ export default function AmountSaved({ userIdentifer }) {
               className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
               Set Savings Amount
             </button>
-            <DoughnutChart chartData={emptyData} />
+            <DoughnutChart chartData={data2 ? data2 : emptyData} />
           </div>
         </div>
       </a>

@@ -10,22 +10,21 @@ import 'react-datepicker/dist/react-datepicker.css';
 export default function BudgetModal({ uid, closeModal }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.Budgets.getBudget);
-  console.log(data);
   const [budget, setBudget] = useState(0);
 
   const budgetHandler = (event) => {
     setBudget(event.target.value);
   };
 
-  const [startDate, setStartDate] = useState(null);
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
+  const [startDate, setStartDate] = useState();
+  const handleStartDateChange = (event) => {
+    setStartDate(event.target.value);
   };
 
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState();
 
-  const handleEndDateChange = (date) => {
-    setEndDate(date);
+  const handleEndDateChange = (event) => {
+    setEndDate(event.target.value);
   };
 
   const buttonHandler = (event) => {
@@ -50,14 +49,21 @@ export default function BudgetModal({ uid, closeModal }) {
   useEffect(() => {
     if (data === null) {
       setBudget(0);
-      setEndDate(null);
-      setStartDate(null);
+      setEndDate(''); // Set to empty string instead of null
+      setStartDate(''); // Set to empty string instead of null
     } else {
       setBudget(data.amount);
 
-      // Convert ISO strings to Date objects
-      setStartDate(new Date(data.date));
-      setEndDate(new Date(data.endDate));
+      // Ensure data.date and data.endDate are not null before slicing
+      const startDate = data.date
+        ? new Date(data.date).toISOString().slice(0, 10)
+        : '';
+      const endDate = data.endDate
+        ? new Date(data.endDate).toISOString().slice(0, 10)
+        : '';
+
+      setStartDate(startDate);
+      setEndDate(endDate);
     }
   }, [data]);
 
@@ -113,11 +119,12 @@ export default function BudgetModal({ uid, closeModal }) {
                 htmlFor="datePicker">
                 Select a Start Date:
               </label>
-              <DatePicker
+              <input
+                type="date"
+                required
                 className="mx-auto mb-1 text-center block py-2.5 px-0 w-[300px] text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black-100 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                selected={startDate}
+                value={startDate}
                 onChange={handleStartDateChange}
-                dateFormat="yyyy-MM-dd"
               />
             </div>
             <div className="flex flex-col">
@@ -126,10 +133,11 @@ export default function BudgetModal({ uid, closeModal }) {
                 htmlFor="datePicker">
                 Select a End Date:
               </label>
-              <DatePicker
-                selected={endDate}
+              <input
+                type="date"
+                value={endDate}
                 onChange={handleEndDateChange}
-                dateFormat="yyyy-MM-dd"
+                required
                 className="mx-auto mb-1 text-center block py-2.5 px-0 w-[300px] text-xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black-100 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               />
             </div>
