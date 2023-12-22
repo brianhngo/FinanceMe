@@ -8,21 +8,14 @@ const budgetRouter = express.Router();
 
 budgetRouter.put('/setBudget', async (req, res) => {
   try {
-    const { amount, userIdentifer, budgetInterval } = req.body;
-
-    // Calculate the Monday of the current week
-    const today = new Date();
-    const currentDayOfWeek = today.getDay();
-    const daysUntilMonday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
-    const mondayOfCurrentWeek = new Date(today);
-    mondayOfCurrentWeek.setDate(today.getDate() - daysUntilMonday);
+    const { amount, userIdentifer, status, date, endDate } = req.body;
 
     const user = await Budgets.create({
       userIdentifer: userIdentifer,
       amount: amount,
-      budgetInterval: budgetInterval,
-      status: true,
-      date: mondayOfCurrentWeek,
+      status: status,
+      date: date,
+      endDate: endDate,
     });
 
     if (user) {
@@ -60,90 +53,59 @@ budgetRouter.put('/getBudget', async (req, res) => {
 budgetRouter.put('/getChartData', async (req, res) => {
   try {
     const { userIdentifer } = req.body;
-
-    const user = await Budgets.findOne({
+    const budget = await Budgets.findOne({
       where: {
         userIdentifer: userIdentifer,
         status: true,
       },
     });
-    let timeCondition;
 
-    if (user !== undefined && user !== null) {
-      switch (user.budgetInterval) {
-        case 'biweekly':
-          timeCondition = `"Transactions"."date" >= DATE_TRUNC('MONTH', CURRENT_TIMESTAMP) - INTERVAL '0.5 months'`;
-          break;
-
-        case 'weekly':
-          timeCondition = `"Transactions"."date" >= DATE_TRUNC('MONTH', CURRENT_TIMESTAMP) - INTERVAL '0.25 months'`;
-          break;
-
-        case 'monthly':
-          timeCondition = `"Transactions"."date" >= DATE_TRUNC('MONTH', CURRENT_TIMESTAMP) - INTERVAL '1 month'`;
-          break;
-
-        case 'quarterly':
-          timeCondition = `"Transactions"."date" >= DATE_TRUNC('MONTH', CURRENT_TIMESTAMP) - INTERVAL '3 months'`;
-          break;
-
-        case 'yearly':
-          timeCondition = `"Transactions"."date" >= DATE_TRUNC('MONTH', CURRENT_TIMESTAMP) - INTERVAL '12 months'`;
-          break;
-
-        default:
-          // Handle unexpected cases or set a default value
-          console.error('Unexpected budget interval:', user.budgetInterval);
-          // You might want to set a default condition or handle this case accordingly
-          timeCondition = '';
-          break;
+    const data = await db.query(
+      `
+        SELECT
+          SUM(sub.amount) as total,
+          TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM') as month
+        FROM
+          (
+            SELECT * FROM "Transactions"
+            WHERE
+              "Transactions"."userIdentifer" = :userIdentifer
+              AND "Transactions"."date" >= :startDate
+              AND "Transactions"."date" < :endDate
+          ) as sub
+        GROUP BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM')
+        ORDER BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM') ASC
+      `,
+      {
+        replacements: {
+          userIdentifer: userIdentifer,
+          startDate: budget.date, // Assuming budget has a property named date
+          endDate: budget.endDate, // Assuming budget has a property named endDate
+        },
+        type: QueryTypes.SELECT,
       }
+    );
 
-      const data = await db.query(
-        `
-    SELECT
-      SUM(sub.amount) as total,
-      TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM') as month
-    FROM
-    (
-      SELECT * FROM "Transactions"
-      WHERE
-        "Transactions"."userIdentifer" = ${userIdentifer}
-        AND DATE_TRUNC('MONTH', "Transactions"."date") < DATE_TRUNC('MONTH', ${user.date}) 
-        AND ${timeCondition}
-    ) as sub
-    GROUP BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM')
-    ORDER BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM') ASC
-  `,
-        {
-          type: QueryTypes.SELECT,
-        }
-      );
-
-      if (data !== undefined && data !== null) {
-        // Extracting total_amount and month arrays using map
-
-        const result = {
-          labels: ['Spent', 'Amount Remaining'],
-          datasets: [
-            {
-              // label: `Amount spent (in $) for ${category} `,
-              data: data,
-              backgroundColor: [
-                'red', // Red
-                'green', // Green
-              ],
-              borderColor: ['black'],
-            },
-          ],
-        };
-        res.json(result);
-      } else {
-        res.json(false);
-      }
+    if (data !== undefined && data !== null) {
+      // Extracting total_amount and month arrays using map
+      const result = {
+        labels: ['Amount Spent', 'Amount Remaining'],
+        datasets: [
+          {
+            label: 'Budget Tracker',
+            data: [data[0].total, budget.amount - data[0].total],
+            backgroundColor: ['red', 'green'],
+            borderColor: ['black'],
+          },
+        ],
+      };
+      res.json(result);
+    } else {
+      res.json(false);
     }
   } catch (error) {
     console.error(error);
+    res.json(false);
   }
 });
 

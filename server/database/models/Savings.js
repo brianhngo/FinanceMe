@@ -10,15 +10,17 @@ const Savings = db.define('Savings', {
       notEmpty: true,
     },
   },
-  deadline: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
-  },
   status: {
     type: Sequelize.BOOLEAN,
+    allowNull: false,
+  },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.NOW,
+  },
+  endDate: {
+    type: Sequelize.DATE,
     allowNull: false,
   },
 });

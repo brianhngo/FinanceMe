@@ -4,6 +4,7 @@ import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../store/Transactions.js';
 import { logoutUser2 } from '../store/Users.js';
+import { logoutUser3 } from '../store/Budgets.js';
 import { useDispatch } from 'react-redux';
 export default function SideBar({ userInfo }) {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ export default function SideBar({ userInfo }) {
       .then(() => {
         dispatch(logoutUser());
         dispatch(logoutUser2());
+        dispatch(logoutUser3());
         navigate('/');
       })
       .catch((error) => {

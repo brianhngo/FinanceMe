@@ -40,12 +40,12 @@ Budgets.belongsTo(Users, {
   foreignKey: 'userIdentifer',
   sourceKey: 'userIdentifer',
 });
-Users.hasOne(Budgets, {
+Users.hasMany(Budgets, {
   foreignKey: 'userIdentifer',
   sourceKey: 'userIdentifer',
 });
 
-Users.hasOne(Savings, {
+Users.hasMany(Savings, {
   foreignKey: 'userIdentifer',
   sourceKey: 'userIdentifer',
 });

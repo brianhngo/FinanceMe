@@ -4,14 +4,16 @@ import axios from 'axios';
 
 export const setBudgetAmount = createAsyncThunk(
   'GET/Budgets/setBudgetinfo',
-  async ({ userIdentifer, amount, budgetInterval }) => {
+  async ({ userIdentifer, status, amount, date, endDate }) => {
     try {
       const { data } = await axios.put(
         'http://localhost:3000/api/budgets/setBudget',
         {
           userIdentifer: userIdentifer,
           amount: amount,
-          budgetInterval: budgetInterval,
+          status: status,
+          date: date,
+          endDate: endDate,
         }
       );
 
@@ -32,7 +34,7 @@ export const getBudgetAmount = createAsyncThunk(
           userIdentifer: userIdentifer,
         }
       );
-
+      console.log('data', data);
       return data;
     } catch (error) {
       console.error(error);
@@ -50,7 +52,6 @@ export const getBudgetChartData = createAsyncThunk(
           userIdentifer: userIdentifer,
         }
       );
-      console.log('data', data);
       return data;
     } catch (error) {
       console.error(error);

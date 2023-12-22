@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getBudgetAmount, setBudgetAmount } from '../store/Budgets.js';
+
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function BudgetModal({ uid, closeModal }) {
+export default function SavingsModal({ uid, closeModal }) {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.Budgets.getBudget);
-  console.log(data);
+
   const [budget, setBudget] = useState(0);
 
   const budgetHandler = (event) => {
@@ -30,36 +29,10 @@ export default function BudgetModal({ uid, closeModal }) {
 
   const buttonHandler = (event) => {
     event.preventDefault();
-    dispatch(
-      setBudgetAmount({
-        userIdentifer: uid,
-        status: true,
-        amount: budget,
-        date: startDate,
-        endDate: endDate,
-      })
-    );
+
     toast.success('Successfully Added!');
     closeModal();
   };
-
-  useEffect(() => {
-    dispatch(getBudgetAmount({ userIdentifer: uid }));
-  }, [uid]);
-
-  useEffect(() => {
-    if (data === null) {
-      setBudget(0);
-      setEndDate(null);
-      setStartDate(null);
-    } else {
-      setBudget(data.amount);
-
-      // Convert ISO strings to Date objects
-      setStartDate(new Date(data.date));
-      setEndDate(new Date(data.endDate));
-    }
-  }, [data]);
 
   return (
     <div className="flex flex-col w-[500px] h-[500px]">
@@ -87,7 +60,7 @@ export default function BudgetModal({ uid, closeModal }) {
       <div>
         <h1 className="text-center text-4xl mt-5 mb-[10%] ">
           {' '}
-          Set Your Budget Tracker{' '}
+          Set Your Savings Tracker{' '}
         </h1>
         <form className="max-w-md mt-5 mx-auto">
           <div className="relative mx-auto z-0 w-full mb-5 group">

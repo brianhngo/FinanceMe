@@ -10,14 +10,7 @@ const Budgets = db.define('Budgets', {
       notEmpty: true,
     },
   },
-  budgetInterval: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
-    isIn: [['weekly', 'biweekly', 'monthly', 'quarterly', 'yearly']],
-  },
+
   status: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
@@ -26,6 +19,10 @@ const Budgets = db.define('Budgets', {
     type: Sequelize.DATE,
     allowNull: false,
     defaultValue: Sequelize.NOW,
+  },
+  endDate: {
+    type: Sequelize.DATE,
+    allowNull: false,
   },
 });
 
