@@ -7,17 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBudgetChartData } from '../store/Budgets.js';
 import { getSavingsChartData } from '../store/Savings.js';
 import SavingsModal from './SavingsModal.js';
-
-const emptyData = {
-  labels: ['Yes', 'No'],
-  datasets: [
-    {
-      label: 'Poll',
-      data: [3, 6],
-      backgroundColor: ['black', 'red'],
-    },
-  ],
-};
+import DeleteBudgetsModal from './DeleteBudgetsModal.js';
+import DeleteSavingsModal from './DeleteSavingsModal.js';
 
 const customStyles = {
   content: {
@@ -34,7 +25,6 @@ const customStyles = {
 export default function AmountSaved({ userIdentifer }) {
   const data1 = useSelector((state) => state.Budgets.getBudgetChartDatas);
   const data2 = useSelector((state) => state.Savings.SavingsChartDatas);
-  console.log('data2', data2);
 
   // Modal Status for Adding New Transaction
   const dispatch = useDispatch();
@@ -49,6 +39,17 @@ export default function AmountSaved({ userIdentifer }) {
     setBudgetModal(false);
   };
 
+  // Open/Close Budgets Delete Modal
+  const [budgetModalDelete, setBudgetModalDelete] = useState(false);
+
+  const openBudgetModalDelete = () => {
+    setBudgetModalDelete(true);
+  };
+
+  const closeBudgetModalDelete = () => {
+    setBudgetModalDelete(false);
+  };
+
   // Open/Close Savings Modal
   const [savingsModal, setSavingsModal] = useState(false);
 
@@ -58,6 +59,17 @@ export default function AmountSaved({ userIdentifer }) {
 
   const closeSavingsModal = () => {
     setSavingsModal(false);
+  };
+
+  // Open/Close Budgets Delete Modal
+  const [savingsModalDelete, setSavingsModalDelete] = useState(false);
+
+  const openSavingsModalDelete = () => {
+    setSavingsModalDelete(true);
+  };
+
+  const closeSavingsModalDelete = () => {
+    setSavingsModalDelete(false);
   };
 
   useEffect(() => {
@@ -72,16 +84,15 @@ export default function AmountSaved({ userIdentifer }) {
       })
     );
   }, [userIdentifer]);
-
   return (
-    <section className="ml-5 mr-5 mt-5 mb-5 w-90 h-[90%]">
+    <section className="ml-5 mr-5 mt-5 mb-5 w-90 h-[95%]">
       <a
         href="#"
         className="block w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition-transform transform-gpu hover:-translate-y-2">
-        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="mt-2 mb-2 text-4xl font-bold tracking-tight text-center text-gray-900 dark:text-white">
           Monitor Your Tracker: Current Budget Balance and Savings"
         </h5>
-        <p className="font-normal text-gray-700 dark:text-gray-400">
+        <p className="block mb-2 text-lg text-center font-medium text-white">
           Set your monthly budget and savings goals effortlessly with our
           user-friendly platform
         </p>
@@ -103,22 +114,65 @@ export default function AmountSaved({ userIdentifer }) {
             closeModal={() => closeSavingsModal()}
           />
         </Modal>
-        <div className=" flex">
-          <div className="w-[200px] h-[200px]">
-            <button
-              onClick={openBudgetModal}
-              className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
-              Set Budget Amount
-            </button>
-            <DoughnutChart chartData={data1 ? data1 : emptyData} />
+
+        {/* Delete Modals  */}
+
+        {/* budget */}
+        <Modal
+          isOpen={budgetModalDelete}
+          onRequestClose={closeBudgetModalDelete}
+          style={customStyles}>
+          <DeleteBudgetsModal
+            uid={userIdentifer}
+            closeModal={() => closeBudgetModalDelete()}
+          />
+        </Modal>
+
+        {/* Saving */}
+        <Modal
+          isOpen={savingsModalDelete}
+          onRequestClose={closeSavingsModalDelete}
+          style={customStyles}>
+          <DeleteSavingsModal
+            uid={userIdentifer}
+            closeModal={() => closeSavingsModalDelete()}
+          />
+        </Modal>
+        <div className=" flex justify-center align-middle mx-auto w-full">
+          <div className="w-full h-full mx-auto ">
+            <div className="flex">
+              <button
+                onClick={openBudgetModal}
+                className="w-140 h-45 mx-auto block font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+                Set Budget Amount
+              </button>
+              <button
+                onClick={openBudgetModalDelete}
+                className="w-140 h-45 mx-auto block font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-red-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+                Delete Budget Tracker
+              </button>
+            </div>
+
+            <div className="w-[350px] h-[300px] mx-auto">
+              <DoughnutChart chartData={data1 ? data1 : null} />
+            </div>
           </div>
-          <div className="w-[200px] h-[200px]">
-            <button
-              onClick={openSavingsModal}
-              className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
-              Set Savings Amount
-            </button>
-            <DoughnutChart chartData={data2 ? data2 : emptyData} />
+          <div className="w-full h-full mx-auto">
+            <div className="flex">
+              <button
+                onClick={openSavingsModal}
+                className="w-140 mx-auto block h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+                Set Savings Amount
+              </button>
+              <button
+                onClick={openSavingsModalDelete}
+                className="w-140 h-45 mx-auto block font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-red-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+                Delete Savings Tracker
+              </button>
+            </div>
+            <div className="w-[350px] h-[300px] mx-auto">
+              <DoughnutChart chartData={data2 ? data2 : null} />
+            </div>
           </div>
         </div>
       </a>

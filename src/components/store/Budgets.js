@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
 import axios from 'axios';
 
 export const setBudgetAmount = createAsyncThunk(
@@ -34,7 +33,7 @@ export const getBudgetAmount = createAsyncThunk(
           userIdentifer: userIdentifer,
         }
       );
-      console.log('data', data);
+
       return data;
     } catch (error) {
       console.error(error);
@@ -52,6 +51,24 @@ export const getBudgetChartData = createAsyncThunk(
           userIdentifer: userIdentifer,
         }
       );
+      console.log('chartdata', data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const deleteBudgetChartData = createAsyncThunk(
+  'DELETE /Budgets/deleteBudgetChartData',
+  async ({ userIdentifer }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/budgets/deleteBudgetChartData',
+        {
+          userIdentifer: userIdentifer,
+        }
+      );
       return data;
     } catch (error) {
       console.error(error);
@@ -65,12 +82,14 @@ const Budgets = createSlice({
     setBudget: null,
     getBudget: 0,
     getBudgetChartDatas: null,
+    deleteBudgetStatus: null,
   },
   reducers: {
     logoutUser3: (state) => {
       state.setBudget = null;
       state.getBudget = 0;
       state.getBudgetChartDatas = null;
+      state.deleteBudgetStatus = null;
     },
   },
   extraReducers: (builder) => {
@@ -86,6 +105,10 @@ const Budgets = createSlice({
       })
       .addCase(getBudgetChartData.fulfilled, (state, { payload }) => {
         state.getBudgetChartDatas = payload;
+      })
+      .addCase(deleteBudgetChartData.fulfilled, (state, { payload }) => {
+        state.deleteBudgetStatus = payload;
+        state.getBudgetChartDatas = null;
       });
   },
 });

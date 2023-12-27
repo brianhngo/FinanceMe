@@ -52,6 +52,25 @@ export const getSavingsChartData = createAsyncThunk(
           userIdentifer: userIdentifer,
         }
       );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const deleteSavingsChartData = createAsyncThunk(
+  'DELETE /Budgets/deleteSavingsChartData',
+  async ({ userIdentifer }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/savings/deleteSavingsChartData',
+        {
+          userIdentifer: userIdentifer,
+        }
+      );
+
       return data;
     } catch (error) {
       console.error(error);
@@ -65,12 +84,14 @@ const Savings = createSlice({
     setSavings: null,
     getSavings: 0,
     SavingsChartDatas: null,
+    deleteSavingChartsData: null,
   },
   reducers: {
     logoutUser4: (state) => {
       state.setSavings = null;
       state.getSavings = 0;
       state.SavingsChartDatas = null;
+      state.deleteSavingChartsData = null;
     },
   },
   extraReducers: (builder) => {
@@ -89,6 +110,10 @@ const Savings = createSlice({
       })
       .addCase(getSavingsChartData.fulfilled, (state, { payload }) => {
         state.SavingsChartDatas = payload;
+      })
+      .addCase(deleteSavingsChartData.fulfilled, (state, { payload }) => {
+        state.deleteSavingChartsData = true;
+        state.SavingsChartDatas = null;
       });
   },
 });

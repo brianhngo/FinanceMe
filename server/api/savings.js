@@ -9,6 +9,20 @@ savingsRouter.put('/setSavings', async (req, res) => {
   try {
     const { amount, userIdentifer, status, date, endDate } = req.body;
 
+    // changing the current status and updating it to new settings.
+    const oldData = await Savings.findOne({
+      where: {
+        userIdentifer: userIdentifer,
+        status: true,
+      },
+    });
+
+    if (oldData) {
+      await oldData.update({
+        status: false,
+      });
+    }
+
     const user = await Savings.create({
       userIdentifer: userIdentifer,
       amount: amount,
@@ -60,9 +74,14 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
       },
     });
 
+    if (!user) {
+      res.json(null);
+      return;
+    }
+
     const data = await db.query(
       `
-      SELECT
+   SELECT
           SUM(sub.amount) as total,
           TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM') as month
         FROM
@@ -72,21 +91,24 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
               "Transactions"."userIdentifer" = :userIdentifer
               AND "Transactions"."date" >= :startDate
               AND "Transactions"."date" < :endDate
-              AND "Transactions"."category" = 'Savings'
+              AND "Transactions"."category" LIKE 'Savings'
           ) as sub
         GROUP BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM')
         ORDER BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM') ASC
-      `,
+`,
       {
         replacements: {
           userIdentifer: userIdentifer,
           startDate: user.date,
           endDate: user.endDate,
+          value: '%Savings%', // Use a specific pattern
         },
         type: QueryTypes.SELECT,
       }
     );
+
     if (data !== undefined && data !== null) {
+      console.log(data, 'data');
       const result = {
         labels: ['Amount Saved', 'Amount to go'],
         datasets: [
@@ -98,6 +120,7 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
           },
         ],
       };
+      console.log(result);
       res.json(result);
     } else {
       res.json(false);
@@ -107,4 +130,35 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
   }
 });
 
+// delete savings => turning it into false
+savingsRouter.put('/deleteSavingsChartData', async (req, res) => {
+  try {
+    const { userIdentifer } = req.body;
+
+    // Use await to get the data
+    const data = await Savings.findOne({
+      where: {
+        userIdentifer: userIdentifer,
+        status: true,
+      },
+    });
+
+    // Check if data is found
+    if (data) {
+      // Update status to false
+      await data.update({
+        status: false,
+      });
+
+      // Send response
+      res.json(true);
+    } else {
+      // If data is not found, send an appropriate response
+      res.status(404).json(false);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 export default savingsRouter;

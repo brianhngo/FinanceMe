@@ -10,6 +10,20 @@ budgetRouter.put('/setBudget', async (req, res) => {
   try {
     const { amount, userIdentifer, status, date, endDate } = req.body;
 
+    // changing the current status and updating it to new settings.
+    const oldData = await Budgets.findOne({
+      where: {
+        userIdentifer: userIdentifer,
+        status: true,
+      },
+    });
+
+    if (oldData) {
+      await oldData.update({
+        status: false,
+      });
+    }
+
     const user = await Budgets.create({
       userIdentifer: userIdentifer,
       amount: amount,
@@ -60,6 +74,12 @@ budgetRouter.put('/getChartData', async (req, res) => {
       },
     });
 
+    if (!budget) {
+      // If budget does not exist, return null
+      res.json(null);
+      return;
+    }
+
     const data = await db.query(
       `
         SELECT
@@ -89,7 +109,20 @@ budgetRouter.put('/getChartData', async (req, res) => {
     if (data !== undefined && data !== null) {
       // Extracting total_amount and month arrays using map
       const result = {
-        labels: ['Amount Spent', 'Amount Remaining'],
+        labels: [
+          `Amount Spent - ${parseInt(data[0].total)}$ (${Math.round(
+            (parseInt(data[0].total) /
+              (parseInt(budget.amount) + parseInt(data[0].total))) *
+              100,
+            100
+          ).toFixed(1)}%)`,
+          `Amount Remaining - ${parseInt(budget.amount)}$ (${Math.round(
+            (parseInt(budget.amount) /
+              (parseInt(budget.amount) + parseInt(data[0].total))) *
+              100,
+            100
+          ).toFixed(1)}%)`,
+        ],
         datasets: [
           {
             label: 'Budget Tracker',
@@ -106,6 +139,37 @@ budgetRouter.put('/getChartData', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.json(false);
+  }
+});
+// delete budget => turning it into false
+budgetRouter.put('/deleteBudgetChartData', async (req, res) => {
+  try {
+    const { userIdentifer } = req.body;
+
+    // Use await to get the data
+    const data = await Budgets.findOne({
+      where: {
+        userIdentifer: userIdentifer,
+        status: true,
+      },
+    });
+
+    // Check if data is found
+    if (data !== undefined && data !== null) {
+      // Update status to false
+      await data.update({
+        status: false,
+      });
+
+      // Send response
+      res.json(true);
+    } else {
+      // If data is not found, send an appropriate response
+      res.status(404).json(false);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

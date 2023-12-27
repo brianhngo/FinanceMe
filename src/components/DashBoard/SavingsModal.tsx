@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { setSavingsAmount, getSavingsAmount } from '../store/Savings.js';
+import {
+  setSavingsAmount,
+  getSavingsAmount,
+  getSavingsChartData,
+} from '../store/Savings.js';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -37,6 +41,7 @@ export default function SavingsModal({ uid, closeModal }) {
         endDate: endDate,
       })
     );
+    dispatch(getSavingsChartData({ userIdentifer: uid }));
     toast.success('Successfully Added!');
     closeModal();
   };
@@ -65,7 +70,7 @@ export default function SavingsModal({ uid, closeModal }) {
       setEndDate(endDate);
     }
   }, [data]);
-  console.log(budget, 'budget', 'startDate', startDate, 'endDate', endDate);
+
   return (
     <div className="flex flex-col w-[500px] h-[500px]">
       <button

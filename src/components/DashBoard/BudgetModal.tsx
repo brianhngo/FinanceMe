@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getBudgetAmount, setBudgetAmount } from '../store/Budgets.js';
+import {
+  getBudgetAmount,
+  setBudgetAmount,
+  getBudgetChartData,
+} from '../store/Budgets.js';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -27,15 +31,20 @@ export default function BudgetModal({ uid, closeModal }) {
     setEndDate(event.target.value);
   };
 
-  const buttonHandler = (event) => {
+  const buttonHandler = async (event) => {
     event.preventDefault();
-    dispatch(
+    await dispatch(
       setBudgetAmount({
         userIdentifer: uid,
         status: true,
         amount: budget,
         date: startDate,
         endDate: endDate,
+      })
+    );
+    await dispatch(
+      getBudgetChartData({
+        userIdentifer: uid,
       })
     );
     toast.success('Successfully Added!');

@@ -2,27 +2,15 @@ import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 export default function DoughnutChart({ chartData }) {
-  const textCenter = {
-    id: 'textCenter',
-    afterDraw(chart, args, pluginOptions) {
-      const { ctx, data } = chart;
-      ctx.save();
-      ctx.font = 'bolder 30px sans-serif';
-      ctx.fillStyle = 'red';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(
-        `Value: ${data.datasets[1].data}`,
-        chart.getDatasetMeta(0).data[0].x,
-        chart.getDatasetMeta(0).data[0].y
-      );
-    },
-  };
+  if (!chartData) {
+    // Return a loading indicator or placeholder if chartData is not available
+    return;
+  }
+
   return (
     <>
       <Doughnut
-        type="DoughnutWithLabel"
-        data={chartData}
+        data={chartData ? chartData : null}
         options={{
           plugins: {
             legend: {
@@ -33,7 +21,6 @@ export default function DoughnutChart({ chartData }) {
                 },
               },
             },
-
             datalabels: {
               color: 'white',
               font: {
@@ -43,7 +30,6 @@ export default function DoughnutChart({ chartData }) {
           },
           maintainAspectRatio: false,
         }}
-        plugins={[textCenter]}
       />
     </>
   );
