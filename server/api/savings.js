@@ -90,8 +90,8 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
             WHERE
               "Transactions"."userIdentifer" = :userIdentifer
               AND "Transactions"."date" >= :startDate
-              AND "Transactions"."date" < :endDate
-              AND "Transactions"."category" LIKE 'Savings'
+              AND "Transactions"."date" <= :endDate
+              AND "Transactions"."category" ILIKE :value
           ) as sub
         GROUP BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM')
         ORDER BY TO_CHAR(DATE_TRUNC('MONTH', sub.date), 'YYYY-MM') ASC
@@ -106,11 +106,23 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
+    //  AND "Transactions"."category" ILIKE :value
 
     if (data !== undefined && data !== null) {
-      console.log(data, 'data');
       const result = {
-        labels: ['Amount Saved', 'Amount to go'],
+        labels: [
+          `Amount Saved - ${parseInt(data[0].total)}$ (${(
+            (parseInt(data[0].total) /
+              (parseInt(user.amount) + parseInt(data[0].total))) *
+            100
+          ).toFixed(1)}%)`,
+          `Amount Remaining - ${
+            parseInt(user.amount) - parseInt(data[0].total)
+          }$ (${(
+            (parseInt(user.amount - data[0].total) / parseInt(user.amount)) *
+            100
+          ).toFixed(1)}%)`,
+        ],
         datasets: [
           {
             label: 'Savings Tracker',
@@ -120,7 +132,7 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
           },
         ],
       };
-      console.log(result);
+
       res.json(result);
     } else {
       res.json(false);

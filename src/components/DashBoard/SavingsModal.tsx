@@ -30,9 +30,9 @@ export default function SavingsModal({ uid, closeModal }) {
     setEndDate(event.target.value);
   };
 
-  const buttonHandler = (event) => {
+  const buttonHandler = async (event) => {
     event.preventDefault();
-    dispatch(
+    await dispatch(
       setSavingsAmount({
         userIdentifer: uid,
         status: true,
@@ -41,7 +41,7 @@ export default function SavingsModal({ uid, closeModal }) {
         endDate: endDate,
       })
     );
-    dispatch(getSavingsChartData({ userIdentifer: uid }));
+    await dispatch(getSavingsChartData({ userIdentifer: uid }));
     toast.success('Successfully Added!');
     closeModal();
   };

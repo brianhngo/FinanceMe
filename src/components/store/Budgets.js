@@ -51,7 +51,7 @@ export const getBudgetChartData = createAsyncThunk(
           userIdentifer: userIdentifer,
         }
       );
-      console.log('chartdata', data);
+
       return data;
     } catch (error) {
       console.error(error);

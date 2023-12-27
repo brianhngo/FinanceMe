@@ -16,7 +16,6 @@ const emptyData = {
 export default function MonthlyBreakdown({ uid }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.Transactions.monthlyTransactions);
-  console.log(data);
 
   const sum = data?.datasets[0]?.data.reduce(
     (acc, currentValue) => acc + (isNaN(currentValue) ? 0 : currentValue),

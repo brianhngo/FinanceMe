@@ -6,7 +6,7 @@ export default function TestContent({ userIdentifer }) {
   const data = useSelector(
     (state) => state.Transactions.totalExpensesComparison
   );
-  console.log(data);
+
   const dispatch = useDispatch();
   const [timeframe, setTimeframe] = useState(null);
   const timeFrameHandler = (event) => {

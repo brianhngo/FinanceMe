@@ -110,16 +110,15 @@ budgetRouter.put('/getChartData', async (req, res) => {
       // Extracting total_amount and month arrays using map
       const result = {
         labels: [
-          `Amount Spent - ${parseInt(data[0].total)}$ (${Math.round(
-            (parseInt(data[0].total) /
-              (parseInt(budget.amount) + parseInt(data[0].total))) *
-              100,
+          `Amount Spent - ${parseInt(data[0].total)}$ (${(
+            (parseInt(data[0].total) / parseInt(budget.amount)) *
             100
           ).toFixed(1)}%)`,
-          `Amount Remaining - ${parseInt(budget.amount)}$ (${Math.round(
-            (parseInt(budget.amount) /
-              (parseInt(budget.amount) + parseInt(data[0].total))) *
-              100,
+          `Amount Remaining - ${
+            parseInt(budget.amount) - parseInt(data[0].total)
+          }$ (${(
+            (parseInt(budget.amount - parseInt(data[0].total)) /
+              parseInt(budget.amount)) *
             100
           ).toFixed(1)}%)`,
         ],
