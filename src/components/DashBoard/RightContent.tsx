@@ -16,7 +16,7 @@ export default function RightContent({ uid }) {
         <AmountSaved userIdentifer={uid} />
       </div>
       <div className="row-span-1 md:row-span-1">
-        <UpcomingBills />
+        <UpcomingBills userIdentifer={uid} />
       </div>
     </div>
   );

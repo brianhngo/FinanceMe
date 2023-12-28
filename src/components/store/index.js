@@ -3,6 +3,7 @@ import Users from './Users';
 import Transactions from './Transactions';
 import Budgets from './Budgets';
 import Savings from './Savings';
+import Billings from './Billings';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     Transactions: Transactions,
     Budgets: Budgets,
     Savings: Savings,
+    Billings: Billings,
   },
 });
 

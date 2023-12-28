@@ -1,5 +1,5 @@
 // Seeding file
-import { db, Users, Transactions, Goals } from './database/models/index.js';
+import { db, Users, Transactions, Bills } from './database/models/index.js';
 
 const oneMonthFromNow = new Date();
 oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
@@ -160,6 +160,56 @@ const seed = async () => {
       amount: 150.0,
       category: 'Other',
       description: 'Brother Birthday Gift',
+      date: new Date(),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+
+    await Bills.create({
+      amount: 1000,
+      status: true,
+      description: 'Rent Payment',
+      isRecurring: true,
+      recurrenceInterval: 'monthly',
+      date: new Date(),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+
+    await Bills.create({
+      amount: 60,
+      status: true,
+      description: 'Water',
+      isRecurring: true,
+      recurrenceInterval: 'monthly',
+      date: new Date(),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+
+    await Bills.create({
+      amount: 70,
+      status: true,
+      description: 'electricity',
+      isRecurring: true,
+      recurrenceInterval: 'monthly',
+      date: new Date(),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+
+    await Bills.create({
+      amount: 200,
+      status: true,
+      description: 'Borrowing Money from AJ',
+      isRecurring: true,
+      recurrenceInterval: 'once',
+      date: new Date(),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+
+    await Bills.create({
+      amount: 50,
+      status: true,
+      description: 'Owe money to dad',
+      isRecurring: true,
+      recurrenceInterval: 'once',
       date: new Date(),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });

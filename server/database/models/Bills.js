@@ -10,6 +10,10 @@ const Bills = db.define('Bills', {
       notEmpty: true,
     },
   },
+  status: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+  },
   description: {
     type: Sequelize.TEXT,
     allowNull: false,
@@ -25,6 +29,7 @@ const Bills = db.define('Bills', {
   recurrenceInterval: {
     type: Sequelize.STRING,
     allowNull: true,
+    isIn: ['biweekly', 'weekly', 'monthly', 'quarterly', 'yearly', 'once'],
   },
   date: {
     type: Sequelize.DATE,
