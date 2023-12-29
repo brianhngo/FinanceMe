@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  addBillings,
   getBillings,
   editBillings,
   getSingularBillings,
+  deleteSingularBillings,
 } from '../store/Billings.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -101,30 +101,29 @@ export default function EditBillsModal({ userIdentifer, billId, closeModal }) {
     setDeleteModal(false);
   };
 
-  //   const deleteTransactionHandler = async (event) => {
-  //     try {
-  //       event.preventDefault();
-  //       await dispatch(
-  //         deleteTransaction({
-  //           transactionId: transactionId,
-  //           userIdentifer: uid,
-  //         })
-  //       );
+  const deleteBillHandler = async (event) => {
+    try {
+      event.preventDefault();
+      await dispatch(
+        deleteSingularBillings({
+          userIdentifer: userIdentifer,
+          id: billId,
+        })
+      );
 
-  //       setDeleteModal(false);
-  //       await dispatch(
-  //         getTransactionList({
-  //           uid: uid,
-  //           page: 1,
-  //         })
-  //       );
-  //       toast.success('Deleted!');
+      await dispatch(
+        getBillings({
+          userIdentifer: userIdentifer,
+        })
+      );
 
-  //       closeModal();
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+      toast.success('Deleted!');
+
+      closeModal();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -296,6 +295,12 @@ export default function EditBillsModal({ userIdentifer, billId, closeModal }) {
                 className="block text-white bg-blue-700 mx-auto hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Submit
               </button>
+              <button
+                type="submit"
+                onClick={openDeleteModal}
+                className="block mt-5 mb-5 text-white bg-red-700 mx-auto hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                Delete
+              </button>
             </form>
           </div>
         </div>
@@ -345,7 +350,7 @@ export default function EditBillsModal({ userIdentifer, billId, closeModal }) {
                 No, cancel
               </button>
               <button
-                onClick={deleteTransactionHandler}
+                onClick={deleteBillHandler}
                 type="submit"
                 className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                 Yes, I'm sure

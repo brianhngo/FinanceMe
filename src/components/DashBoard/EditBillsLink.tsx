@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { resetBillingInfo } from '../store/Billings.js';
 import EditBillsModal from './EditBillsModal';
+import ConfirmationModal from './ConfirmationModal.js';
 import { useDispatch } from 'react-redux';
 
 const customStyles2 = {
@@ -20,6 +21,17 @@ const customStyles2 = {
 const EditBillsLink = ({ billId, userIdentifer }) => {
   const dispatch = useDispatch();
   const [editBillModal, setEditBillModal] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  const [completionStatus, setCompletionStatus] = useState(false);
+
+  const openStatusHandler = () => {
+    setConfirmationModal(true);
+  };
+
+  const closedStatusHandler = () => {
+    setCompletionStatus(false);
+    setConfirmationModal(false);
+  };
 
   const openEditBillModal = () => {
     setEditBillModal(true);
@@ -30,6 +42,17 @@ const EditBillsLink = ({ billId, userIdentifer }) => {
     setEditBillModal(false);
   };
 
+  const handleCheckboxChange = (event) => {
+    // If the checkbox is checked, open the confirmation modal
+    if (event.target.checked) {
+      openStatusHandler();
+    } else {
+      // If the checkbox is unchecked, close the confirmation modal
+      setCompletionStatus(false);
+      setConfirmationModal(false);
+    }
+  };
+
   return (
     <>
       <a
@@ -38,7 +61,6 @@ const EditBillsLink = ({ billId, userIdentifer }) => {
         className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
         Edit
       </a>
-
       <Modal
         isOpen={editBillModal}
         onRequestClose={closeEditBillModal}
@@ -49,6 +71,26 @@ const EditBillsLink = ({ billId, userIdentifer }) => {
           closeModal={closeEditBillModal}
         />
       </Modal>
+
+      <Modal
+        isOpen={confirmationModal}
+        onRequestClose={closedStatusHandler}
+        style={customStyles2}>
+        <ConfirmationModal
+          billId={billId}
+          userIdentifer={userIdentifer}
+          closeModal={closedStatusHandler}
+        />
+      </Modal>
+      <div className="ml-5 flex flex-col">
+        <label htmlFor="exampleCheckbox">Completed?</label>
+        <input
+          type="checkbox"
+          id="exampleCheckbox"
+          checked={completionStatus}
+          onChange={handleCheckboxChange}
+        />
+      </div>
     </>
   );
 };

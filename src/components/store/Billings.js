@@ -107,26 +107,31 @@ export const getSingularBillings = createAsyncThunk(
 
 export const deleteSingularBillings = createAsyncThunk(
   'GET/Billings/deleteSingularBillings',
-  async ({
-    userIdentifer,
-    amount,
-    status,
-    description,
-    isRecurring,
-    recurrenceInterval,
-    date,
-  }) => {
+  async ({ userIdentifer, id }) => {
     try {
       const { data } = await axios.put(
         'http://localhost:3000/api/billings/deleteSingularBillings',
         {
           userIdentifer: userIdentifer,
-          amount: amount,
-          status: status,
-          description: description,
-          isRecurring: isRecurring,
-          recurrenceInterval: recurrenceInterval,
-          date: date,
+          id: id,
+        }
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const extendRecurringDate = createAsyncThunk(
+  'PUT/BILLINGS/extendRecurringDates',
+  async ({ userIdentifer, id }) => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3000/api/billings/extendSingularBillings',
+        {
+          userIdentifer: userIdentifer,
+          id: id,
         }
       );
       return data;
@@ -144,6 +149,7 @@ const Billings = createSlice({
     getSingularListData: [],
     deleteSingularList: null,
     addBilling: null,
+    recurringIntervalStatus: null,
   },
   reducers: {
     resetBillingInfo: (state) => {
@@ -155,6 +161,10 @@ const Billings = createSlice({
       state.getSingularListData = [];
       state.deleteSingularList = null;
       state.addBilling = null;
+      state.recurringIntervalStatus = null;
+    },
+    resetRecurringIntervalStatus: (state) => {
+      state.recurringIntervalStatus = null;
     },
   },
   extraReducers: (builder) => {
@@ -173,9 +183,13 @@ const Billings = createSlice({
       })
       .addCase(addBillings.fulfilled, (state, { payload }) => {
         state.addBilling = payload;
+      })
+      .addCase(extendRecurringDate.fulfilled, (state, { payload }) => {
+        state.recurringIntervalStatus = payload;
       });
   },
 });
 
-export const { logoutUser5, resetBillingInfo } = Billings.actions;
+export const { logoutUser5, resetBillingInfo, resetRecurringIntervalStatus } =
+  Billings.actions;
 export default Billings.reducer;

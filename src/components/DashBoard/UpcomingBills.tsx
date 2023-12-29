@@ -160,18 +160,7 @@ export default function UpcomingBills({ userIdentifer }) {
                               billId={row.id}
                               userIdentifer={userIdentifer}
                             />
-                            <div>
-                              {/* Checkbox input */}
-                              <input
-                                type="checkbox"
-                                id="exampleCheckbox"
-                                // checked={isChecked}
-                                // onChange={handleCheckboxChange}
-                              />
-
-                              {/* Label for the checkbox */}
-                              <label htmlFor="exampleCheckbox">Check me!</label>
-                            </div>
+                            <div></div>
                           </td>
                         </tr>
                       </>
