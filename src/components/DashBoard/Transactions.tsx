@@ -105,6 +105,13 @@ export default function Transactions({ uid }) {
         <div className=" pr-5 pb-5 flex justify-end align-middle">
           {/* Add Transaction Modal  */}
 
+          <Modal
+            isOpen={newTransactionModal}
+            onRequestClose={closeTransactionModal}
+            style={customStyles}>
+            <AddTransactionModal uid={uid} closeModal={closeTransactionModal} />
+          </Modal>
+
           <button
             onClick={openTransactionModal}
             className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">

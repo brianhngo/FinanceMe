@@ -14,6 +14,7 @@ billingsRouter.put('/getBillings', async (req, res) => {
         userIdentifer: userIdentifer,
         status: true,
       },
+      order: [['date', 'ASC']], // Order by 'date' in ascending order
     });
 
     if (data) {
@@ -28,12 +29,12 @@ billingsRouter.put('/getBillings', async (req, res) => {
 
 billingsRouter.put('/getSingularBillings', async (req, res) => {
   try {
-    const { userIdentifer, id } = req.body;
+    const { userIdentifer, billId } = req.body;
 
-    const data = await Bills.findOne({
+    const data = await Bills.findAll({
       where: {
         userIdentifer: userIdentifer,
-        id: id,
+        id: billId,
       },
     });
 
@@ -56,6 +57,7 @@ billingsRouter.put('/addBillings', async (req, res) => {
       description,
       isRecurring,
       recurrenceInterval,
+      date,
     } = req.body;
 
     const data = await Bills.create({
@@ -65,10 +67,11 @@ billingsRouter.put('/addBillings', async (req, res) => {
       description: description,
       isRecurring: isRecurring,
       recurrenceInterval: recurrenceInterval,
+      date: date,
     });
 
     if (data) {
-      res.json(data);
+      res.json(true);
     } else {
       res.json(false);
     }
@@ -87,18 +90,17 @@ billingsRouter.put('/editBillings', async (req, res) => {
       description,
       isRecurring,
       recurrenceInterval,
+      id,
     } = req.body;
 
     const data = await Bills.findOne({
-      userIdentifer: userIdentifer,
-      status: status,
-      amount: amount,
-      description: description,
-      isRecurring: isRecurring,
-      recurrenceInterval: recurrenceInterval,
+      where: {
+        userIdentifer: userIdentifer,
+        id: id,
+      },
     });
 
-    data.update({
+    await data.update({
       userIdentifer: userIdentifer,
       status: status,
       amount: amount,

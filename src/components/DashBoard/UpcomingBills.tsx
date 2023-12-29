@@ -1,11 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getBillings } from '../store/Billings.js';
+import AddBillsModal from './AddBillsModal.js';
+import Modal from 'react-modal';
+import EditBillsLink from './EditBillsLink.js';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 1,
+  },
+};
 
 export default function UpcomingBills({ userIdentifer }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.Billings.getBillingsList);
-  console.log(data);
+
+  const [addBillsModal, setAddBillsModal] = useState(false);
+
+  const openAddBillsModal = () => {
+    setAddBillsModal(true);
+  };
+
+  const closeAddBillsModal = () => {
+    setAddBillsModal(false);
+  };
 
   useEffect(() => {
     dispatch(
@@ -14,6 +38,7 @@ export default function UpcomingBills({ userIdentifer }) {
       })
     );
   }, [userIdentifer]);
+
   return (
     <section className="ml-5 mr-5 mt-5 mb-5 w-full mx-auto h-[90%]">
       <a
@@ -24,9 +49,18 @@ export default function UpcomingBills({ userIdentifer }) {
         </h5>
         <div className=" pr-5 pb-5 flex justify-end align-middle">
           {/* Add Transaction Modal  */}
+          <Modal
+            isOpen={addBillsModal}
+            onRequestClose={closeAddBillsModal}
+            style={customStyles}>
+            <AddBillsModal
+              userIdentifer={userIdentifer}
+              closeModal={closeAddBillsModal}
+            />
+          </Modal>
 
           <button
-            // onClick={openTransactionModal}
+            onClick={openAddBillsModal}
             className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
             Add a Bill
           </button>
@@ -105,38 +139,45 @@ export default function UpcomingBills({ userIdentifer }) {
               </tr>
             </thead>
             <tbody className="overflow-y-auto">
-              {data.map((row, index) => {
-                return (
-                  <>
-                    <tr
-                      key={index}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <td className="px-6 py-4">{row.description}</td>
-                      <td className="px-6 py-4">{row.amount}</td>
-                      <td className="px-6 py-4">{row.date}</td>
-                      <td className="px-6 py-4">
-                        {row.isRecurring === true ? 'yes' : 'no'}
-                      </td>
-                      <td className="px-6 py-4">{row.recurrenceInterval}</td>
-                      <td className="px-6 py-4 text-right flex flex-row">
-                        <div> Edit </div>
-                        <div>
-                          {/* Checkbox input */}
-                          <input
-                            type="checkbox"
-                            id="exampleCheckbox"
-                            // checked={isChecked}
-                            // onChange={handleCheckboxChange}
-                          />
+              {data
+                ? data.map((row, index) => {
+                    return (
+                      <>
+                        <tr
+                          key={index}
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                          <td className="px-6 py-4">{row.description}</td>
+                          <td className="px-6 py-4">{row.amount}</td>
+                          <td className="px-6 py-4">{row.date}</td>
+                          <td className="px-6 py-4">
+                            {row.isRecurring === true ? 'yes' : 'no'}
+                          </td>
+                          <td className="px-6 py-4">
+                            {row.recurrenceInterval}
+                          </td>
+                          <td className="px-6 py-4 text-right flex flex-row">
+                            <EditBillsLink
+                              billId={row.id}
+                              userIdentifer={userIdentifer}
+                            />
+                            <div>
+                              {/* Checkbox input */}
+                              <input
+                                type="checkbox"
+                                id="exampleCheckbox"
+                                // checked={isChecked}
+                                // onChange={handleCheckboxChange}
+                              />
 
-                          {/* Label for the checkbox */}
-                          <label htmlFor="exampleCheckbox">Check me!</label>
-                        </div>
-                      </td>
-                    </tr>
-                  </>
-                );
-              })}
+                              {/* Label for the checkbox */}
+                              <label htmlFor="exampleCheckbox">Check me!</label>
+                            </div>
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  })
+                : null}
             </tbody>
           </table>
         </div>

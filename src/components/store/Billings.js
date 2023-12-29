@@ -27,9 +27,11 @@ export const addBillings = createAsyncThunk(
     status,
     description,
     isRecurring,
-    recurrenceInterval,
+    isRecurringInterval,
+    date,
   }) => {
     try {
+      console.log(userIdentifer);
       const { data } = await axios.put(
         'http://localhost:3000/api/billings/addBillings',
         {
@@ -38,7 +40,8 @@ export const addBillings = createAsyncThunk(
           status: status,
           description: description,
           isRecurring: isRecurring,
-          recurrenceInterval: recurrenceInterval,
+          recurrenceInterval: isRecurringInterval,
+          date: date,
         }
       );
 
@@ -59,6 +62,7 @@ export const editBillings = createAsyncThunk(
     isRecurring,
     recurrenceInterval,
     date,
+    id,
   }) => {
     try {
       const { data } = await axios.put(
@@ -71,6 +75,7 @@ export const editBillings = createAsyncThunk(
           isRecurring: isRecurring,
           recurrenceInterval: recurrenceInterval,
           date: date,
+          id: id,
         }
       );
 
@@ -83,28 +88,16 @@ export const editBillings = createAsyncThunk(
 
 export const getSingularBillings = createAsyncThunk(
   'GET/Billings/getSingularBillings',
-  async ({
-    userIdentifer,
-    amount,
-    status,
-    description,
-    isRecurring,
-    recurrenceInterval,
-    date,
-  }) => {
+  async ({ userIdentifer, billId }) => {
     try {
       const { data } = await axios.put(
         'http://localhost:3000/api/billings/getSingularBillings',
         {
           userIdentifer: userIdentifer,
-          amount: amount,
-          status: status,
-          description: description,
-          isRecurring: isRecurring,
-          recurrenceInterval: recurrenceInterval,
-          date: date,
+          billId: billId,
         }
       );
+      console.log(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -146,17 +139,20 @@ export const deleteSingularBillings = createAsyncThunk(
 const Billings = createSlice({
   name: 'Billings',
   initialState: {
-    getBillingsList: null,
+    getBillingsList: [],
     editBillings: null,
-    getSingularList: null,
+    getSingularListData: [],
     deleteSingularList: null,
     addBilling: null,
   },
   reducers: {
+    resetBillingInfo: (state) => {
+      state.getSingularListData = [];
+    },
     logoutUser5: (state) => {
-      state.getBillingsList = null;
+      state.getBillingsList = [];
       state.editBillings = null;
-      state.getSingularList = null;
+      state.getSingularListData = [];
       state.deleteSingularList = null;
       state.addBilling = null;
     },
@@ -170,7 +166,7 @@ const Billings = createSlice({
         state.editBillings = true;
       })
       .addCase(getSingularBillings.fulfilled, (state, { payload }) => {
-        state.getSingularList = payload;
+        state.getSingularListData = payload;
       })
       .addCase(deleteSingularBillings.fulfilled, (state, { payload }) => {
         state.deleteSingularList = payload;
@@ -181,5 +177,5 @@ const Billings = createSlice({
   },
 });
 
-export const { logoutUser5 } = Billings.actions;
+export const { logoutUser5, resetBillingInfo } = Billings.actions;
 export default Billings.reducer;
