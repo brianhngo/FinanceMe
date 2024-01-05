@@ -14,7 +14,7 @@ transactionRouter.put('/transactionsList', async (req, res) => {
       where: {
         userIdentifer: req.body.uid,
       },
-      order: [['id', 'DESC']],
+      order: [['date', 'DESC']],
       limit: 10,
       offset: (req.body.page - 1) * pageSize,
     });
@@ -131,18 +131,21 @@ transactionRouter.put('/deleteTransaction', async (req, res) => {
   }
 });
 
-// Monthly Expenses
 transactionRouter.put('/getMonthlyExpenses', async (req, res) => {
   try {
     const { userIdentifer } = req.body;
 
     const data = await db.query(
-      `SELECT * FROM "Transactions" WHERE EXTRACT(MONTH FROM "Transactions"."updatedAt") = EXTRACT(MONTH FROM CURRENT_TIMESTAMP) AND "Transactions"."userIdentifer" = '${userIdentifer}' `,
+      `SELECT * FROM "Transactions" WHERE EXTRACT(MONTH FROM "Transactions"."date") = EXTRACT(MONTH FROM CURRENT_TIMESTAMP) AND "Transactions"."userIdentifer" = :userIdentifer`,
       {
+        replacements: {
+          userIdentifer: userIdentifer,
+        },
         type: QueryTypes.SELECT,
       }
     );
 
+    // Move the if statement inside the try block
     if (data !== undefined && data !== null) {
       const obj2 = {};
       data.forEach((row) => {
@@ -163,17 +166,17 @@ transactionRouter.put('/getMonthlyExpenses', async (req, res) => {
             label: 'Amount spent (in $)',
             data: test3,
             backgroundColor: [
-              'red', // Red
-              'green', // Green
-              'blue', // Blue
-              'pink', // Pink
-              'yellow', // Yellow
-              'purple', // Purple
-              'cyan', // Cyan
-              'brown', // Dark Pink
-              'black', // Turquoise
-              'gray', // Orange
-              'orange', // Violet
+              'red',
+              'green',
+              'blue',
+              'pink',
+              'yellow',
+              'purple',
+              'cyan',
+              'brown',
+              'black',
+              'gray',
+              'orange',
             ],
             borderColor: ['black'],
           },
@@ -182,7 +185,7 @@ transactionRouter.put('/getMonthlyExpenses', async (req, res) => {
 
       res.json(result);
     } else {
-      res.json(false);
+      res.json([]);
     }
   } catch (error) {
     console.error(error);

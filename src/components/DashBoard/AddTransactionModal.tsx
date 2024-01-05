@@ -61,7 +61,7 @@ export default function AddTransactionModal({ uid, closeModal }) {
   };
 
   return (
-    <div className="flex flex-col w-[500px] h-[500px]">
+    <div className="flex flex-col  md:w-[500px] md:h-[500px]">
       <button
         onClick={closeModal}
         type="button"

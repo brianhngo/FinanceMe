@@ -108,16 +108,19 @@ budgetRouter.put('/getChartData', async (req, res) => {
 
     if (data !== undefined && data !== null) {
       // Extracting total_amount and month arrays using map
+      let value = 0;
+      for (let i = 0; i < data.length; i++) {
+        value += parseInt(data[i].total);
+      }
+      console.log(value);
       const result = {
         labels: [
-          `Amount Spent - ${parseInt(data[0].total)}$ (${(
-            (parseInt(data[0].total) / parseInt(budget.amount)) *
+          `Amount Spent - ${parseInt(value)}$ (${(
+            (parseInt(value) / parseInt(budget.amount)) *
             100
           ).toFixed(1)}%)`,
-          `Amount Remaining - ${
-            parseInt(budget.amount) - parseInt(data[0].total)
-          }$ (${(
-            (parseInt(budget.amount - parseInt(data[0].total)) /
+          `Amount Remaining - ${parseInt(budget.amount) - parseInt(value)}$ (${(
+            (parseInt(budget.amount - parseInt(value)) /
               parseInt(budget.amount)) *
             100
           ).toFixed(1)}%)`,
@@ -125,7 +128,7 @@ budgetRouter.put('/getChartData', async (req, res) => {
         datasets: [
           {
             label: 'Budget Tracker',
-            data: [data[0].total, budget.amount - data[0].total],
+            data: [value, budget.amount - value],
             backgroundColor: ['red', 'green'],
             borderColor: ['black'],
           },

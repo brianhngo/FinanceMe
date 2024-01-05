@@ -1,8 +1,22 @@
 // Seeding file
-import { db, Users, Transactions, Bills } from './database/models/index.js';
+import {
+  db,
+  Users,
+  Transactions,
+  Bills,
+  Savings,
+  Budgets,
+} from './database/models/index.js';
 
-const oneMonthFromNow = new Date();
-oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+// Function to subtract days from a date
+const subtractDays = (date, days) => {
+  const newDate = new Date(date);
+  newDate.setDate(date.getDate() - days);
+  return newDate;
+};
+
+// Get the current date
+const currentDate = new Date();
 
 const seed = async () => {
   try {
@@ -16,201 +30,719 @@ const seed = async () => {
       amount: 800.0,
       category: 'Savings',
       description: 'Paycheck',
-      date: new Date(),
+      date: currentDate,
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 432.0,
+      amount: 800.0,
       category: 'Savings',
       description: 'Paycheck',
-      date: new Date(),
+      date: subtractDays(currentDate, 14),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 513.0,
+      amount: 800.0,
       category: 'Savings',
       description: 'Paycheck',
-      date: new Date(),
+      date: subtractDays(currentDate, 28),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 231.0,
+      amount: 800.0,
       category: 'Savings',
       description: 'Paycheck',
-      date: new Date(),
+      date: subtractDays(currentDate, 42),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 341.0,
-      category: 'Loans',
-      description: 'Car Payment',
-      date: new Date(),
+      amount: 800.0,
+      category: 'Savings',
+      description: 'Paycheck',
+      date: subtractDays(currentDate, 56),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 1000.0,
-      category: 'Loans',
-      description: 'Student Loan',
-      date: new Date(),
+      amount: 800.0,
+      category: 'Savings',
+      description: 'Paycheck',
+      date: subtractDays(currentDate, 70),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 849.02,
-      category: 'Loans',
-      description: 'Money Loan',
-      date: new Date(),
+      amount: 800.0,
+      category: 'Savings',
+      description: 'Paycheck',
+      date: subtractDays(currentDate, 84),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 52.13,
-      category: 'Utilities',
-      description: 'Water',
-      date: new Date(),
+      amount: 800.0,
+      category: 'Savings',
+      description: 'Paycheck',
+      date: subtractDays(currentDate, 98),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 61.0,
-      category: 'Utilities',
-      description: 'Electricity',
-      date: new Date(),
+      amount: 800.0,
+      category: 'Savings',
+      description: 'Paycheck',
+      date: subtractDays(currentDate, 112),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 32.1,
-      category: 'Utilities',
-      description: 'Gas',
-      date: new Date(),
+      amount: 200.0,
+      category: 'Other',
+      description: 'Brothers Bday gift',
+      date: subtractDays(currentDate, 60),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 800,
-      category: 'Rent',
-      description: 'December Rent',
-      date: new Date(),
+      amount: 100.0,
+      category: 'Other',
+      description: 'Sammys Bday gift',
+      date: subtractDays(currentDate, 100),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 200,
-      category: 'Groceries',
-      description: 'Food',
-      date: new Date(),
+      amount: 50.0,
+      category: 'Other',
+      description: 'Dante Bday gift',
+      date: subtractDays(currentDate, 20),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
-      amount: 100,
-      category: 'Groceries',
-      description: 'Food',
-      date: new Date(),
+      amount: 78.0,
+      category: 'Other',
+      description: 'Charlie Bday gift',
+      date: subtractDays(currentDate, 2),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
-
     await Transactions.create({
-      amount: 43,
-      category: 'Health',
-      description: 'Doctor Copay',
-      date: new Date(),
-      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
-    });
-
-    await Transactions.create({
-      amount: 20,
-      category: 'Health',
-      description: 'Prescription',
-      date: new Date(),
-      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
-    });
-
-    await Transactions.create({
-      amount: 61.59,
-      category: 'Gas',
-      description: 'Car Gas',
-      date: new Date(),
-      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
-    });
-
-    await Transactions.create({
-      amount: 91.59,
+      amount: 540.0,
       category: 'Activities',
-      description: 'Concert Tickets',
-      date: new Date(),
+      description: 'Coachella',
+      date: subtractDays(currentDate, 2),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
-
+    await Transactions.create({
+      amount: 540.0,
+      category: 'Activities',
+      description: 'Top Golf',
+      date: subtractDays(currentDate, 18),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
     await Transactions.create({
       amount: 40.0,
       category: 'Activities',
       description: 'Bowling',
-      date: new Date(),
+      date: subtractDays(currentDate, 18),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 30.0,
+      category: 'Activities',
+      description: 'Minature Golf',
+      date: subtractDays(currentDate, 35),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 40.0,
+      category: 'Activities',
+      description: 'Arcade',
+      date: subtractDays(currentDate, 41),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 63.0,
+      category: 'Activities',
+      description: 'Concert',
+      date: subtractDays(currentDate, 72),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 100.0,
+      category: 'Activities',
+      description: 'Concert',
+      date: subtractDays(currentDate, 101),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 60.0,
+      category: 'Activities',
+      description: 'Concert',
+      date: subtractDays(currentDate, 141),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 60.0,
+      category: 'Activities',
+      description: 'Fishing',
+      date: subtractDays(currentDate, 121),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Transactions.create({
+      amount: 51.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: currentDate,
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 41.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 7),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 21.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 14),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 52.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 31),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 55.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 49),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 59.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 65),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 59.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 84),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 68.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 100),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 59.23,
+      category: 'Gas',
+      description: 'Car Gas',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 25.0,
+      category: 'Health',
+      description: 'Copay',
+      date: subtractDays(currentDate, 10),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 25.0,
+      category: 'Health',
+      description: 'Copay',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 25.0,
+      category: 'Health',
+      description: 'Copay',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 25.0,
+      category: 'Health',
+      description: 'Prescription',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 25.0,
+      category: 'Health',
+      description: 'Prescription',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 25.0,
+      category: 'Health',
+      description: 'Prescription',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 25.0,
+      category: 'Health',
+      description: 'Prescription',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 10.0,
+      category: 'Transportation',
+      description: 'City Bus',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 10.0,
+      category: 'Transportation',
+      description: 'City Bus',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 10.0,
+      category: 'Transportation',
+      description: 'City Bus',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 10.0,
+      category: 'Transportation',
+      description: 'City Bus',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 10.0,
+      category: 'Transportation',
+      description: 'City Bus',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 10.0,
+      category: 'Transportation',
+      description: 'Subway',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 10.0,
+      category: 'Transportation',
+      description: 'Subway',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 90.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 14),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 80.0,
+      category: 'Groceries',
+      description: 'Costco',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 30.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 42),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 56),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 200.0,
+      category: 'Groceries',
+      description: 'Costco',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 24.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 70),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 40.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 84),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
       amount: 150.0,
-      category: 'Other',
-      description: 'Brother Birthday Gift',
-      date: new Date(),
+      category: 'Groceries',
+      description: 'Costco',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 890.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 104),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 70.0,
+      category: 'Groceries',
+      description: 'TraderJoes',
+      date: subtractDays(currentDate, 110),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 109.0,
+      category: 'Groceries',
+      description: 'Costco',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 109.0,
+      category: 'Groceries',
+      description: 'Costco',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 1100.0,
+      category: 'Rent',
+      description: 'Housing',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 1100.0,
+      category: 'Rent',
+      description: 'Housing',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 1100.0,
+      category: 'Rent',
+      description: 'Housing',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 1100.0,
+      category: 'Rent',
+      description: 'Housing',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 1100.0,
+      category: 'Rent',
+      description: 'Housing',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 1100.0,
+      category: 'Rent',
+      description: 'Housing',
+      date: subtractDays(currentDate, 150),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+
+    await Transactions.create({
+      amount: 250,
+      category: 'Clothing',
+      description: 'Suit',
+      date: subtractDays(currentDate, 20),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 40.0,
+      category: 'Clothing',
+      description: 'Work Clothes',
+      date: subtractDays(currentDate, 45),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 62.0,
+      category: 'Clothing',
+      description: 'Work Clothes',
+      date: subtractDays(currentDate, 75),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Clothing',
+      description: 'Jacket',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Water',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Electricity',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Gas + Waste',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Water',
+      date: subtractDays(currentDate, 300),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Electricity',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Gas + Waste',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Water',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Electricity',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Gas + Waste',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Water',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Electricity',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Gas + Waste',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Water',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Electricity',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Utilities',
+      description: 'Gas + Waste',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Loans',
+      description: 'Students',
+      date: subtractDays(currentDate, 0),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Loans',
+      description: 'Students',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Loans',
+      description: 'Students',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Loans',
+      description: 'Students',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 120.0,
+      category: 'Loans',
+      description: 'Students',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 20.0,
+      category: 'Loans',
+      description: 'Car',
+      date: subtractDays(currentDate, 120),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 20.0,
+      category: 'Loans',
+      description: 'Car',
+      date: subtractDays(currentDate, 90),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 20.0,
+      category: 'Loans',
+      description: 'Car',
+      date: subtractDays(currentDate, 60),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 20.0,
+      category: 'Loans',
+      description: 'Car',
+      date: subtractDays(currentDate, 30),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Transactions.create({
+      amount: 20.0,
+      category: 'Loans',
+      description: 'Car',
+      date: subtractDays(currentDate, 0),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
     await Bills.create({
-      amount: 1000,
+      amount: 1100,
       status: true,
-      description: 'Rent Payment',
+      description: 'rent',
       isRecurring: true,
       recurrenceInterval: 'monthly',
       date: new Date(),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
-
+    await Bills.create({
+      amount: 40,
+      status: true,
+      description: 'Utilities Gas',
+      isRecurring: true,
+      recurrenceInterval: 'monthly',
+      date: new Date(),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
+    await Bills.create({
+      amount: 20,
+      status: true,
+      description: 'Utilities Waste',
+      isRecurring: true,
+      recurrenceInterval: 'monthly',
+      date: new Date(),
+      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
+    });
     await Bills.create({
       amount: 60,
       status: true,
-      description: 'Water',
+      description: 'Utilities Water',
       isRecurring: true,
       recurrenceInterval: 'monthly',
       date: new Date(),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
-    await Bills.create({
-      amount: 70,
+    await Savings.create({
+      amount: 10000,
       status: true,
-      description: 'electricity',
-      isRecurring: true,
-      recurrenceInterval: 'monthly',
-      date: new Date(),
+      date: subtractDays(currentDate, 0),
+      endDate: subtractDays(currentDate, -90),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 
-    await Bills.create({
-      amount: 200,
+    await Budgets.create({
+      amount: 10000,
       status: true,
-      description: 'Borrowing Money from AJ',
-      isRecurring: true,
-      recurrenceInterval: 'once',
-      date: new Date(),
-      userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
-    });
-
-    await Bills.create({
-      amount: 50,
-      status: true,
-      description: 'Owe money to dad',
-      isRecurring: true,
-      recurrenceInterval: 'once',
-      date: new Date(),
+      date: subtractDays(currentDate, 7),
+      endDate: subtractDays(currentDate, -90),
       userIdentifer: 'iVuyLC8FgSd4HkLAux7Fauk5ao92',
     });
 

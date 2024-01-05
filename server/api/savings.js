@@ -2,6 +2,7 @@ import express from 'express';
 import { Savings, Transactions } from '../database/models/index.js';
 import { Sequelize, QueryTypes } from 'sequelize';
 import { db } from '../database/models/index.js';
+import { useRef } from 'react';
 
 const savingsRouter = express.Router();
 
@@ -78,7 +79,7 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
       res.json(null);
       return;
     }
-
+    console.log(user);
     const data = await db.query(
       `
    SELECT
@@ -109,6 +110,7 @@ savingsRouter.put('/getChartDataSavings', async (req, res) => {
     //  AND "Transactions"."category" ILIKE :value
 
     if (data !== undefined && data !== null) {
+      console.log(data, 'data');
       const result = {
         labels: [
           `Amount Saved - ${parseInt(data[0].total)}$ (${(

@@ -31,7 +31,7 @@ export default function MonthlyTrends({ userIdentifer }) {
   }, [category, timeframe, dispatch]);
 
   return (
-    <section className="ml-5 mr-5 mt-5 mb-5 w-90 h-[90%]">
+    <section className="md:ml-10 md:mr-10   mr-1 ml-1 mt- mb-5 md:mt-5 md:mb-5 w-[400px]  h-full md:w-[90%] mx-auto md:h-full">
       <a
         href="#"
         className="block w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition-transform transform-gpu hover:-translate-y-2">
@@ -54,7 +54,11 @@ export default function MonthlyTrends({ userIdentifer }) {
                   } months to Present for ${category}`}
             </label>
           )}
-          <div className="flex flex-col">
+          <div
+            className="flex flex-col"
+            onClick={(e) => {
+              e.preventDefault();
+            }}>
             <select
               id="countries"
               className="bg-transparent mb-5 border mx-auto border-gray-300 text-white w-[300px] text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5  dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -90,11 +94,15 @@ export default function MonthlyTrends({ userIdentifer }) {
               <option value="alltime">All time</option>
             </select>
           </div>
-          <div>
+          <div
+            className="h-full"
+            onClick={(e) => {
+              e.preventDefault();
+            }}>
             {data !== null ? (
-              <>
+              <div className="h-[300px] p-2">
                 <BarChart chartData={data} />
-              </>
+              </div>
             ) : null}
           </div>
         </div>

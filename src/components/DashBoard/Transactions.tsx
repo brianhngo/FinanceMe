@@ -5,16 +5,17 @@ import { toast } from 'react-toastify';
 import Modal from 'react-modal';
 import AddTransactionModal from './AddTransactionModal.js';
 import EditTransactionLink from './EditTransactionLink.js';
+import '../../App.css';
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
+    zIndex: 1,
+    top: '30%',
+    left: '35%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    zIndex: 1,
   },
 };
 
@@ -30,7 +31,7 @@ export default function Transactions({ uid }) {
   const [newTransactionModal, setNewTransactionModal] = useState(false);
 
   // Open/close Transaction Modal
-  const openTransactionModal = () => {
+  const openTransactionModal = (event) => {
     setNewTransactionModal(true);
   };
 
@@ -95,11 +96,11 @@ export default function Transactions({ uid }) {
   }, [uid]);
 
   return (
-    <section className="ml-10 mr-5 mt-5 mb-5 w-[90%] mx-auto h-[90%]">
+    <section className="md:ml-10 md:mr-10   mr-1 ml-1 mt-3 mb-5 md:mt-5 md:mb-5 w-[400px] h-full md:w-[90%] mx-auto md:h-full">
       <a
         href="#"
         className="block w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition-transform transform-gpu hover:-translate-y-2">
-        <h5 className="mt-5 mb-5 text-5xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
+        <h5 className="mt-5 mb-5 text-4xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
           Recent Transactions
         </h5>
         <div className=" pr-5 pb-5 flex justify-end align-middle">
@@ -114,63 +115,43 @@ export default function Transactions({ uid }) {
 
           <button
             onClick={openTransactionModal}
-            className="w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+            className="md:w-140 md:h-50 w-30 h-25 font-sans  p-1 md:p-3 text-base uppercase tracking-wider text-6 md:text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
             Add Transaction
           </button>
         </div>
-        <div className="relative w-full h-[70%] overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-[90%] h-[50%] m-3 mx-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
+        <div className="relative w-full h-[65%] overflow-x-auto  sm:rounded-lg">
+          <table className="md:w-[90%] h-[15%] w-[15%]  mx-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-300">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
+              <tr className="border border-gray-500">
                 <th scope="col" className="px-6 py-3">
-                  <div className="flex items-center">Description</div>
+                  <div className="flex text-center justify-center  items-center">
+                    Description
+                  </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  <div className="flex items-center">
+                <th
+                  scope="col"
+                  className="px-1 py-1 md:px-6 md:py-3 text-center mx-auto">
+                  <div className="flex text-center justify-center items-center mx-auto">
                     Category
-                    <a href="#" onClick={(event) => event.preventDefault()}>
-                      <svg
-                        className="w-3 h-3 ms-1.5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                      </svg>
-                    </a>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  <div className="flex items-center">
+                <th
+                  scope="col"
+                  className="px-1 py-1 md:px-6 md:py-3 text-center">
+                  <div className="flex text-center justify-center  items-center">
                     Price ($)
-                    <a href="#">
-                      <svg
-                        className="w-3 h-3 ms-1.5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                      </svg>
-                    </a>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  <div className="flex items-center">
+                <th
+                  scope="col"
+                  className="px-1 py-1 md:px-6 md:py-3 text-center">
+                  <div className="flex text-center  justify-center items-center">
                     Date
-                    <a href="#">
-                      <svg
-                        className="w-3 h-3 ms-1.5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 24 24">
-                        <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z" />
-                      </svg>
-                    </a>
                   </div>
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th
+                  scope="col"
+                  className="px-1 py-1 md:px-6 md:py-3 text-center">
                   <span className="sr-only">Edit</span>
                 </th>
               </tr>
@@ -183,16 +164,23 @@ export default function Transactions({ uid }) {
                       <>
                         <tr
                           key={idx}
+                          onClick={(e) => {
+                            e.preventDefault();
+                          }}
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                          <td className="px-6 py-4">
+                          <td className="px-1 py-1 text-sm md:px-6 md:py-3 font-medium text-center md:text-lg mx-auto text-gray-400 whitespace-nowrap dark:text-gray-200">
                             {transaction.description}
                           </td>
-                          <td className="px-6 py-4">{transaction.category}</td>
-                          <td className="px-6 py-4">{transaction.amount}</td>
-                          <td className="px-6 py-4">
-                            {transaction.updatedAt.slice(0, 10)}
+                          <td className="px-1 py-1 text-sm md:px-6 md:py-3 font-medium text-center md:text-lg mx-auto text-gray-400 whitespace-nowrap dark:text-gray-200">
+                            {transaction.category}
                           </td>
-                          <td className="px-6 py-4 text-right">
+                          <td className="px-1 py-1 text-sm md:px-6 md:py-3 font-medium text-center md:text-lg mx-auto text-gray-400 whitespace-nowrap dark:text-gray-200">
+                            {transaction.amount}
+                          </td>
+                          <td className="px-1 py-1 text-sm md:px-6 md:py-3 font-medium text-center md:text-lg mx-auto text-gray-400 whitespace-nowrap dark:text-gray-200">
+                            {transaction.date.slice(0, 10)}
+                          </td>
+                          <td className="px-1 py-1 text-sm md:px-6 md:py-3 font-medium text-center md:text-lg mx-auto text-gray-400 whitespace-nowrap dark:text-gray-200">
                             <EditTransactionLink
                               uid={uid}
                               transactionId={transaction.id}
@@ -208,7 +196,7 @@ export default function Transactions({ uid }) {
         <div className="flex flex-row justify-around">
           {/* Pagination Buttons  */}
           <div className="flex mt-5 justify-center align-middle">
-            <p className="text-xl mt-auto text-white text-center">
+            <p className="text-md md:text-2xl mt-auto text-white text-center">
               {' '}
               {transactionList.count < 10
                 ? `Showing 1 to ${transactionList.count} of ${transactionList.count} results`
@@ -222,7 +210,7 @@ export default function Transactions({ uid }) {
             <a
               onClick={decreasePageHandler}
               href="#"
-              className="flex items-center justify-center first-line:w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+              className="flex items-center justify-center md:w-140 md:h-50 w-25 h-25 font-sans p-1 md:p-3 text-base uppercase tracking-wider text-6 md:text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
               <svg
                 className="w-3.5 h-3.5 me-2 rtl:rotate-180"
                 aria-hidden="true"
@@ -242,7 +230,7 @@ export default function Transactions({ uid }) {
             <a
               onClick={increasePageHandler}
               href="#"
-              className=" flex items-center justify-center first-line:w-140 h-45 font-sans p-2 text-base uppercase tracking-wider text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
+              className=" flex items-center justify-center md:w-140 md:h-50 w-25 h-25 font-sans p-1 md:p-3 text-base uppercase tracking-wider text-6 md:text-11 leading-14 tracking-2.5 font-bold text-black bg-white border-none hover:bg-green-500 hover:shadow-lg hover:text-white  rounded-[45px] shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none focus:outline-none">
               Next
               <svg
                 className="w-3.5 h-3.5 ms-2 rtl:rotate-180"

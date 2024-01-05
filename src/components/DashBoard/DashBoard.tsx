@@ -37,11 +37,11 @@ export default function DashBoard() {
   useEffect(() => {}, [userInfo]);
 
   return (
-    <section className="flex w-screen h-screen">
-      <div className="w-64">
+    <section className="flex flex-col md:flex w-screen h-screen">
+      <div className=" w-screen mx-auto md:w-64 md:mr-[10%]">
         <SideBar userInfo={userInfo ? userInfo : null} />
       </div>
-      <div className="flex-grow">
+      <div className="w-screen md:flex-grow md:ml-[10%]">
         <Content uid={userInfo ? userInfo.userIdentifer : null} />
       </div>
     </section>

@@ -12,13 +12,13 @@ import DeleteTransactionModal from './DeleteTransactionModal.js';
 
 const customStyles3 = {
   content: {
-    top: '50%',
-    left: '50%',
+    zIndex: 1,
+    top: '30%',
+    left: '35%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    zIndex: 1,
   },
 };
 
@@ -160,7 +160,7 @@ export default function EditTransactionModal({
   return (
     <>
       {deleteModal === false ? (
-        <div className="flex flex-col w-[500px] h-[510px]">
+        <div className="flex flex-col  md:w-[500px] md:h-[500px]">
           <button
             onClick={closeModal}
             type="button"

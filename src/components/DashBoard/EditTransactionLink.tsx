@@ -6,13 +6,13 @@ import { resetTransactionInfo } from '../store/Transactions.js';
 import { useDispatch } from 'react-redux';
 const customStyles2 = {
   content: {
-    top: '50%',
-    left: '50%',
+    zIndex: 1,
+    top: '30%',
+    left: '35%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    zIndex: 1,
   },
 };
 

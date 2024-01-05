@@ -34,14 +34,18 @@ export default function MonthlyBreakdown({ uid }) {
   }, [uid]);
 
   return (
-    <section className="ml-10 mr-5 mt-5 mb-5 w-[90%] mx-auto h-[100%]">
+    <section className="md:ml-10 md:mr-10   mt-[10px] mb-[10px] md:mt-5 md:mb-5 w-[400px] h-full md:w-[90%] mx-auto md:h-full">
       <a
         href="#"
         className="block w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition-transform transform-gpu hover:-translate-y-2">
-        <h5 className="mb-2 text-4xl text-center font-bold tracking-tight text-white dark:text-white">
+        <h5 className="mb-4 mt-5 text-4xl text-center font-bold tracking-tight text-white dark:text-white">
           Monthly Expenses Breakdown
         </h5>
-        <div className="w-full h-[40%] ">
+        <div
+          className="w-full h-[40%] "
+          onClick={(e) => {
+            e.preventDefault();
+          }}>
           {data !== null ? (
             <>
               <PieChart chartData={data} />
@@ -49,27 +53,35 @@ export default function MonthlyBreakdown({ uid }) {
           ) : (
             <PieChart chartData={emptyData} />
           )}
-          <div className="h-[30%]">
-            <h5 className="mb-2 text-2xl text-center font-bold tracking-tight text-white dark:text-white">
+          <div className="mx-auto w-full   md:h-[30%]">
+            <h5 className="mb-3 mt-3 text-3xl text-center font-bold tracking-tight text-white dark:text-white">
               Monthly Breakdown Expenses
             </h5>
-            <p className="mb-2 text-lg text-center font-bold tracking-tight text-white dark:text-white">
+            <p className="mb-3 mt-3 text-xl text-center font-bold tracking-tight text-white dark:text-white">
               {' '}
               These statistics cannot be removed by clicking on Chart's label
             </p>
-            <table className="w-[90%]  m-3 mx-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-center">
+            <table className="md:w-[90%] h-[15%] w-[15%]  mx-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-300">
+              <thead className="text-xs text-gray-600 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
+                <tr className=" border border-gray-500">
+                  <th
+                    scope="col"
+                    className="px-3 py-1 md:px-6 md:py-3 text-center">
                     Category
                   </th>
-                  <th scope="col" className="px-6 py-3 text-center">
+                  <th
+                    scope="col"
+                    className="px-3 py-1 md:px-6 md:py-3 text-center">
                     Color
                   </th>
-                  <th scope="col" className="px-6 py-3 text-center">
+                  <th
+                    scope="col"
+                    className="px-3 py-1 md:px-6 md:py-3 text-center">
                     Total Amount ($)
                   </th>
-                  <th scope="col" className="px-6 py-3 text-center">
+                  <th
+                    scope="col"
+                    className="px-3 py-1 md:px-6 md:py-3 text-center">
                     Percentage (%)
                   </th>
                 </tr>
@@ -82,20 +94,23 @@ export default function MonthlyBreakdown({ uid }) {
                         <>
                           <tr
                             key={idx}
-                            className="bg-white border-b mx-auto text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            onClick={(e) => {
+                              e.preventDefault();
+                            }}
+                            className="bg-white border-b mx-auto text-center dark:bg-gray-800 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th
                               scope="row"
-                              className="px-6 py-4 font-medium text-center mx-auto text-gray-900 whitespace-nowrap dark:text-white">
+                              className="px-3 py-1 text-sm md:px-6 md:py-3 font-medium text-center md:text-lg mx-auto text-gray-400 whitespace-nowrap dark:text-gray-200">
                               {labels[idx]}
                             </th>
-                            <td className="px-6 mx-auto text-center py-4">
+                            <td className="px-3 py-1 text-sm md:px-6 md:py-3 mx-auto md:text-lg text-center text-gray-200 ">
                               {color[idx]}
                             </td>
-                            <td className="px-6 mx-auto text-center py-4">
+                            <td className="px-3 py-1 text-sm md:px-6 md:py-3 mx-auto md:text-lg text-center  text-gray-200 ">
                               {entry}
                             </td>
 
-                            <td className="px-6 mx-auto text-center py-4">
+                            <td className="px-3 py-1 text-sm md:px-6 md:py-3 mx-auto md:text-lg text-center text-gray-200  ">
                               {Math.round((entry / sum) * 100)}
                             </td>
                           </tr>

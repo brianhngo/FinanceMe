@@ -7,15 +7,23 @@ const billingsRouter = express.Router();
 
 billingsRouter.put('/getBillings', async (req, res) => {
   try {
-    const { userIdentifer } = req.body;
+    const { userIdentifer, sort } = req.body;
 
-    const data = await Bills.findAll({
-      where: {
-        userIdentifer: userIdentifer,
-        status: true,
-      },
-      order: [['date', 'ASC']], // Order by 'date' in ascending order
-    });
+    const sortOptions = sort.map((criteria) => [
+      criteria.field,
+      criteria.order || null,
+    ]);
+
+    const data = await db.query(
+      `SELECT * FROM "Bills" WHERE "Bills"."userIdentifer" = :userIdentifer
+    ORDER BY "Bills"."date" ASC`,
+      {
+        replacements: {
+          userIdentifer: userIdentifer,
+        },
+        type: QueryTypes.SELECT,
+      }
+    );
 
     if (data) {
       res.json(data);
@@ -24,6 +32,7 @@ billingsRouter.put('/getBillings', async (req, res) => {
     }
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

@@ -3,7 +3,11 @@ import { Line } from 'react-chartjs-2';
 
 const LineChart = ({ chartData }) => {
   return (
-    <>
+    <div
+      className="w-full h-[100%]"
+      onClick={(e) => {
+        e.preventDefault();
+      }}>
       <Line
         data={chartData}
         options={{
@@ -51,7 +55,7 @@ const LineChart = ({ chartData }) => {
           maintainAspectRatio: false,
         }}
       />
-    </>
+    </div>
   );
 };
 

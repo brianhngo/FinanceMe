@@ -8,7 +8,11 @@ export default function DoughnutChart({ chartData }) {
   }
 
   return (
-    <>
+    <div
+      className="w-full h-[100%]"
+      onClick={(e) => {
+        e.preventDefault();
+      }}>
       <Doughnut
         data={chartData ? chartData : null}
         options={{
@@ -31,6 +35,6 @@ export default function DoughnutChart({ chartData }) {
           maintainAspectRatio: false,
         }}
       />
-    </>
+    </div>
   );
 }

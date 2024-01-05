@@ -165,7 +165,7 @@ export const totalExpensesComparison = createAsyncThunk(
           timeframe: timeframe,
         }
       );
-      console.log(data);
+
       return data;
     } catch (error) {
       console.error(error);

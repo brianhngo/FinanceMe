@@ -6,7 +6,11 @@ import 'chart.piecelabel.js';
 
 const PieChart = ({ chartData }) => {
   return (
-    <>
+    <div
+      className="w-full h-[100%]"
+      onClick={(e) => {
+        e.preventDefault();
+      }}>
       <Pie
         type="pieWithLabel"
         data={chartData}
@@ -31,7 +35,7 @@ const PieChart = ({ chartData }) => {
           maintainAspectRatio: false,
         }}
       />
-    </>
+    </div>
   );
 };
 

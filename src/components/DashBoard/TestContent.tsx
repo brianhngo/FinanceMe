@@ -25,22 +25,30 @@ export default function TestContent({ userIdentifer }) {
   }, [timeframe, dispatch]);
 
   return (
-    <section className="ml-5 mr-5 mt-5 mb-5 w-90 h-[90%]">
+    <section
+      className="md:ml-10 md:mr-10   mr-1 ml-1 mt- mb-5 md:mt-5 md:mb-5 w-[400px] h-full md:w-[90%] mx-auto md:h-full"
+      onClick={(e) => {
+        e.preventDefault();
+      }}>
       <a
         href="#"
         className="block w-full h-full bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 transition-transform transform-gpu hover:-translate-y-2">
         <h5 className="mt-2 mb-2 text-4xl font-bold tracking-tight text-center text-gray-900 dark:text-white">
           Total Spending Trends: Month-by-Month Comparison
         </h5>
-        <div className="relative z-0 w-full mb-5 group">
+        <div
+          className="relative z-0 w-full mb-5 group"
+          onClick={(e) => {
+            e.preventDefault();
+          }}>
           {timeframe === null ? (
             <label
               htmlFor="countries"
-              className="block mb-2 text-lg text-center font-medium text-white">
+              className="block mb-2 text-2xl text-center font-medium text-white">
               Please Select a Timeline You would want to see
             </label>
           ) : (
-            <label className="block mb-2 text-lg text-center font-medium text-white">
+            <label className="block mb-2 text-2xl text-center font-medium text-white">
               {timeframe === 'alltime'
                 ? 'All Time'
                 : `Last ${parseInt(timeframe) + 1} months to Present`}
@@ -61,7 +69,7 @@ export default function TestContent({ userIdentifer }) {
             <option value="alltime">All time</option>
           </select>
         </div>
-        <div className="w-full h-[70%]">
+        <div className="w-full p-2 h-[70%]">
           {data !== null ? (
             <>
               <LineChart chartData={data} />

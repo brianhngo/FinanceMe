@@ -3,12 +3,13 @@ import axios from 'axios';
 
 export const getBillings = createAsyncThunk(
   'GET/Billings/getBillingInfo',
-  async ({ userIdentifer }) => {
+  async ({ userIdentifer, sort }) => {
     try {
       const { data } = await axios.put(
         'http://localhost:3000/api/billings/getBillings',
         {
           userIdentifer: userIdentifer,
+          sort: sort,
         }
       );
 
@@ -31,7 +32,6 @@ export const addBillings = createAsyncThunk(
     date,
   }) => {
     try {
-      console.log(userIdentifer);
       const { data } = await axios.put(
         'http://localhost:3000/api/billings/addBillings',
         {
@@ -166,6 +166,7 @@ const Billings = createSlice({
     resetRecurringIntervalStatus: (state) => {
       state.recurringIntervalStatus = null;
     },
+    sortBillingList: (state, sort) => {},
   },
   extraReducers: (builder) => {
     builder

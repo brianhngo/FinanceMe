@@ -2,9 +2,12 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 const BarChart = ({ chartData }) => {
-  console.log('hi');
   return (
-    <>
+    <div
+      className="w-full h-[100%]"
+      onClick={(e) => {
+        e.preventDefault();
+      }}>
       <Bar
         data={chartData}
         options={{
@@ -46,7 +49,7 @@ const BarChart = ({ chartData }) => {
           maintainAspectRatio: false,
         }}
       />
-    </>
+    </div>
   );
 };
 
