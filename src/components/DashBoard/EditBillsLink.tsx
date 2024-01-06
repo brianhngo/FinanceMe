@@ -1,7 +1,7 @@
 // EditTransactionModalLink.js
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { resetBillingInfo } from '../store/Billings.js';
+import { resetBillingInfo, getBillings } from '../store/Billings.js';
 import EditBillsModal from './EditBillsModal';
 import ConfirmationModal from './ConfirmationModal.js';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,7 @@ const customStyles2 = {
   },
 };
 
-const EditBillsLink = ({ billId, userIdentifer }) => {
+const EditBillsLink = ({ billId, userIdentifer, sort }) => {
   const dispatch = useDispatch();
   const [editBillModal, setEditBillModal] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);

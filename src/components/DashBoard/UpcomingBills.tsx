@@ -169,6 +169,7 @@ export default function UpcomingBills({ userIdentifer }) {
                           </td>
                           <td className="px-2 py-1 text-sm md:px-6 md:py-3 font-medium text-center md:text-lg mx-auto text-gray-400 whitespace-nowrap dark:text-gray-200">
                             <EditBillsLink
+                              sort={sort}
                               billId={row.id}
                               userIdentifer={userIdentifer}
                             />

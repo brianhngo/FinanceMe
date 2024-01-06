@@ -16,6 +16,13 @@ export default function ConfirmationModal({
   );
   const dispatch = useDispatch();
 
+  const [sort, setSort] = useState([
+    { field: 'amount', order: null },
+    { field: 'date', order: null },
+    { field: 'isRecurring', order: null },
+    { field: 'recurrenceInterval', order: null },
+  ]);
+
   const confirmationHandler = async () => {
     await dispatch(
       extendRecurringDate({
@@ -27,6 +34,7 @@ export default function ConfirmationModal({
     dispatch(
       getBillings({
         userIdentifer: userIdentifer,
+        sort: sort,
       })
     );
 
