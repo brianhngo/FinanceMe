@@ -64,7 +64,7 @@ FinanceMe is built using the following technologies:
   </p>
   <p> ChartJs : JavaScript library for interactive charts..
     <a href="https://www.chartjs.org/"> 
-        <img src="https://github.com/brianhngo/FinanceMe/main/public/chartjs-logo.svg" alt="chartjs" width="40" height="40"/> 
+        <img src="https://github.com/brianhngo/FinanceMe/blob/main/public/images/chartjs-logo.svg" alt="chartjs" width="40" height="40"/> 
       </a>
   </p>
 
@@ -98,15 +98,50 @@ FinanceMe is built using the following technologies:
 
 ## Demo
 
-![LandingPage](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/LandingPage.gif)
-![AllProducts1](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/AllProrducts%231.gif)
-![AllProducts2](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/AllProducts%232.gif)
-![AllProducts3](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/AllProducts%233.gif)
-![LoginPage](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/LoginPage.gif)
-![ProfilePage](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/ProfilePage.gif)
-![SingleProduct](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/SingleProduct.gif)
-![SingleProduct2](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/SingleProduct2.gif)
-![ChatFeature](https://github.com/brianhngo/TradeM2/blob/main/public/gifs/ChatFeature.gif)
+<p> Landing Page and Mobile View </p>
+
+![LandingPage](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/LandingPage.gif)
+![LandingPageMobile](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/LandingPage%20Mobile.gif)
+
+<p>  Login Screen and Mobile View </p>
+
+![LoginScreen](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Login%20Screen.gif)
+![LoginScreenMobile](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Mobile%20Login%20Screen.png)
+
+<p> Dashboard Gif and Mobile </p>
+
+![DashboardGif](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Dashboard.gif)
+![DashboardMobile](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/DashboardMobile.gif)
+
+<p> MonthlyExpense </p>
+
+![MonthlyExpenseGif](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/MonthlyExpenses.gif)
+![MonthlyExpensePic](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/MonthlyBreakdown.png)
+
+<p> Transaction </p>
+
+![Transaction1](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Transactions.png)
+![TransactionGif](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Transactions.gif)
+
+<p> Total Spending </p>
+
+![TotalSpending1](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/TotalSpending.gif)
+![TotalSpending2](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/TotalSpending.png)
+
+<p> Category Trend </p>
+
+![CategoryTrend1](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/CategoryTrends.gif)
+![CategoryTrend2](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/CategoryTrend.png)
+
+<p> Tracker </p>
+
+![Tracker](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Tracker.gif)
+![Tracker2](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Tracker.png)
+
+<p> Bills </p>
+
+![Bills](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Bills.png)
+![Bills1](https://github.com/brianhngo/FinanceMe/blob/main/FinanceMeGifs/Bills.gif)
 
 ## Getting Started
 
@@ -122,12 +157,12 @@ https://tradem-6faae.web.app
 
 In Your terminal type -
 
-psql -U your_username -c "CREATE DATABASE financeMe;"
+psql -U your_username -c "CREATE DATABASE financeme;
 
 OR
 
 psql
-CREATE DATABASE financeMe
+CREATE DATABASE financeme
 
 ## Step 2 - Cloning the project
 
@@ -149,7 +184,7 @@ Access the project in your browser at https://localhost:5173
 
 ### Option 1: Create Your Own Account
 
-Visit the TradeM website at www.tradem.com.
+Visit the FinanceMe website at www.tradem.com.
 Click on the "Sign Up" or "Register" button.
 Fill out the registration form with your details, including your name, email address, and password.
 Follow the verification steps (if any) to complete your registration.
@@ -157,7 +192,7 @@ Once registered, log in to your account.
 
 ### Option 2: Use Pre-Made Accounts
 
-If you'd like to explore TradeM without creating an account, you can use the following pre-made accounts:
+If you'd like to explore FinanceMe without creating an account, you can use the following pre-made accounts:
 
 User Account #1
 Email : chau@gmail.com
