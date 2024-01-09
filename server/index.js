@@ -1,6 +1,13 @@
-// // // App Connection
-
-const port = 3000;
+import dotenv from 'dotenv';
 import app from './app.js';
 
-app.listen(port, () => console.log(`listening on port ${port}`));
+dotenv.config();
+
+const databaseUrl = process.env.DATABASE_URL;
+
+// Extracting port from the database URL or nif ran locally
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Database URL: ${databaseUrl}`);
+});
