@@ -2,8 +2,6 @@
 
 ## Deployed Link
 
-https://tradem-6faae.web.app
-
 FinanceMe is your all-in-one financial companion, offering a seamless blend of budgeting, bill management, and insightful transaction tracking. With an intuitive interface, FinanceMe empowers users to effortlessly stay on top of their budgets, savings plans, and monthly spending trends. It's not just an app; it's a versatile tool that adapts to individual financial goals, providing valuable insights to help users make informed decisions about their money. FinanceMe simplifies financial management, turning the complexities of budget tracking into a user-friendly experience that grows with you on your journey to financial well-being.
 
 ## Features
@@ -146,10 +144,6 @@ FinanceMe is built using the following technologies:
 ## Getting Started
 
 To start using FinanceMe, you have two options:
-
-## Run on Deployed Website
-
-https://tradem-6faae.web.app
 
 ## Run Locally
 
