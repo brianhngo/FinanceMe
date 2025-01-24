@@ -1,6 +1,11 @@
 # FinanceMe - Your Online Marketplace
 
-## Deployed Link
+## Thought Process
+
+
+In developing FinanceMe, I aimed to create a seamless and efficient user experience while handling complex financial tasks. For the frontend, I leveraged React to build dynamic user interfaces that interact smoothly with backend data. By incorporating JavaScript and TypeScript, I ensured that the app's logic was flexible and robust, while HTML and CSS provided a solid structure and design foundation for responsive web pages. I used TailwindCSS to style the pages with a mobile-first approach, making the app adaptable across all devices. To fetch data efficiently, I utilized Axios for making API requests and to handle asynchronous operations, keeping the app's data flow seamless. I also implemented Vite for faster builds and hot-reloading during development, which significantly boosted my productivity. For visualizing spending patterns and financial progress, I integrated ChartJS, allowing users to interact with and interpret their financial data through intuitive charts.
+
+On the backend, I chose Node.js as the runtime environment to execute JavaScript on the server side, paired with Express.js to build robust and scalable APIs. Firebase handled user authentication, allowing users to securely sign up, log in, and manage their data. For data storage, I utilized PostgreSQL, storing crucial financial data such as transactions, goals, and bills. To interact with the database efficiently, I employed Sequelize, an Object-Relational Mapping (ORM) tool, which simplified database queries and management. This combination of technologies helped me build a comprehensive financial app that users could trust for managing their finances, while maintaining security, performance, and scalability across both the frontend and backend.
 
 FinanceMe is your all-in-one financial companion, offering a seamless blend of budgeting, bill management, and insightful transaction tracking. With an intuitive interface, FinanceMe empowers users to effortlessly stay on top of their budgets, savings plans, and monthly spending trends. It's not just an app; it's a versatile tool that adapts to individual financial goals, providing valuable insights to help users make informed decisions about their money. FinanceMe simplifies financial management, turning the complexities of budget tracking into a user-friendly experience that grows with you on your journey to financial well-being.
 
@@ -178,7 +183,7 @@ Access the project in your browser at https://localhost:5173
 
 ### Option 1: Create Your Own Account
 
-Visit the FinanceMe website at www.tradem.com.
+
 Click on the "Sign Up" or "Register" button.
 Fill out the registration form with your details, including your name, email address, and password.
 Follow the verification steps (if any) to complete your registration.
